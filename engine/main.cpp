@@ -5,7 +5,7 @@
 #include "greet.h"
 
 int main() {
-	helloWorld();
+	greet();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
