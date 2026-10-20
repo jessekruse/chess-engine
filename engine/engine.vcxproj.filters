@@ -24,12 +24,18 @@
     <ClCompile Include="ChessFunctions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="bitboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="greet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ChessFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bitboard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

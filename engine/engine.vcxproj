@@ -140,11 +140,13 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="bitboard.cpp" />
     <ClCompile Include="ChessFunctions.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="greet.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bitboard.h" />
     <ClInclude Include="ChessFunctions.h" />
     <ClInclude Include="greet.h" />
   </ItemGroup>

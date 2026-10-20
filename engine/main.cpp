@@ -3,14 +3,20 @@
 
 #include <iostream>
 #include <array>
-#include "greet.h"
 #include "ChessFunctions.h"
+#include "bitboard.h"
 
 using namespace std;
 
 int main() {
-	cout << countBits(0) << endl; // Expect 0 bits set
-	cout << countBits(1) << endl; // Expect 1 bit set (the first)
-	cout << countBits(1ULL << 63) << endl; // Expect 1 bit set (the last)
-	cout << countBits(~0ULL) << endl; // Expect 64 bits set 
+
+	int a1 = squareIndex('a', '1');
+	int e4 = squareIndex('e', '4');
+	int h8 = squareIndex('h', '8');
+
+	Bitboard b = sqIndextoBB(a1);
+	fillSq(b, e4);
+	fillSq(b, h8);
+
+	printBB(b);
 }
