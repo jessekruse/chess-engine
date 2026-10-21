@@ -1,6 +1,7 @@
 #include "bitboard.h"
 
 
+// Converts a rank (0-7) and file (0-7) to a square index (0-63)
 int rankFiletoSqIndex(int rank, int file) {
 	if (rank > 7 || rank < 0 || file > 7 || file < 0) {
 		return -1;
@@ -8,12 +9,13 @@ int rankFiletoSqIndex(int rank, int file) {
 	else return rank * 8 + file;
 }
 
-
+// Takes an individual square index and converts it into a Bitboard
+// Not particularly useful
 Bitboard sqIndextoBB(int sq) {
 	return 1ULL << sq; 
 }
 
-
+// Converts a Bitboard number to a binary string to print out
 std::string decToBinary(Bitboard x) {
 	if (x == 0) return "0";
 
@@ -26,25 +28,32 @@ std::string decToBinary(Bitboard x) {
 	return binary;
 }
 
-
+// Checks if a square (0-63) is occupied in a Bitboard
 bool isInBB(Bitboard& b, int sq) {
 	return ((b >> sq) & 1);
 }
 
-
+// Fills a square in a Bitboard so it is occupied.
+// NOTE: Doesn't check if square is already occupied. Might want to add something for this later.
 void fillSq(Bitboard& b, int sq) {
 	if (((b >> sq) & 1) == 0) {
 		b |= 1ULL << sq;
 	}
 }
 
+// Removes a square in a Bitboard so it is no longer occupied.
 void rmSq(Bitboard& b, int sq) {
 	if (((b >> sq) & 1) == 1) {
 		b &= ~(1ULL << sq);
 	}
 }
 
-
+/*
+	Prints a Bitboard on a rank and file grid like a chess board 
+	but only with 1's and .'s. 1 represents an occupied square and 
+	. represents an empty square.
+	Also prints the hex value for that bitboard beneath the grid. 
+*/ 
 void printBB(Bitboard& b) {
 
 	int sq;
@@ -71,4 +80,29 @@ void printBB(Bitboard& b) {
 	std::cout << "  a b c d e f g h" << std::endl;
 
 	std::cout << std::format("{:X}", b) << std::endl;
+}
+
+
+// Counts the number of set bits/occupied squares in a bitboard
+int popcount(Bitboard& b) {
+	return std::popcount(b);
+}
+
+// Returns the index for the lowest occupied square (least significant bit)
+int lsb(Bitboard& b) {
+	if (b == 0) {
+		return -1;
+	}
+	else {
+		return std::countr_zero(b);
+	}
+}
+
+// Finds the lsb, removes it, then returns the index of the bit it just removed
+int pop_lsb(Bitboard& b) {
+	int l = lsb(b);
+
+	b = b & (b - 1);
+
+	return l;
 }
