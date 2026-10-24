@@ -79,7 +79,7 @@ void printBB(Bitboard& b) {
 
 	std::cout << "  a b c d e f g h" << std::endl;
 
-	std::cout << std::format("{:X}", b) << std::endl;
+	std::cout << "0x" << std::format("{:X}", b) << std::endl;
 }
 
 
@@ -105,4 +105,20 @@ int pop_lsb(Bitboard& b) {
 	b = b & (b - 1);
 
 	return l;
+}
+
+Bitboard sN(Bitboard& b) {
+	return b << 8;
+}
+
+Bitboard sE(Bitboard& b) {
+	return ((b << 1) & ~FILE_A);
+}
+
+Bitboard sS(Bitboard& b) {
+	return b >> 8;
+}
+
+Bitboard sW(Bitboard& b) {
+	return ((b >> 1) & ~FILE_H);
 }

@@ -34,3 +34,11 @@ int popcount(Bitboard& b);
 int lsb(Bitboard& b);
 
 int pop_lsb(Bitboard& b);
+
+Bitboard sN(Bitboard& b);
+
+Bitboard sE(Bitboard& b);
+
+Bitboard sS(Bitboard& b);
+
+Bitboard sW(Bitboard& b);

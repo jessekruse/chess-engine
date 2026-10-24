@@ -5,15 +5,14 @@
 #include <array>
 #include "ChessFunctions.h"
 #include "bitboard.h"
+#include <cmath>
+#include "Tests.h"
 
 using namespace std;
 
 int main() {
 	
-	Bitboard b = RANK_8;
 
-	printBB(b);
-
-	cout << lsb(b) << endl;
-
+	run_bitboard_tests();
+	cout << "All tests cleared" << endl;
 }
