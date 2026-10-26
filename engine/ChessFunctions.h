@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <array>
+#include <cstdint>
 
 int squareIndex(char file, char rank);
 

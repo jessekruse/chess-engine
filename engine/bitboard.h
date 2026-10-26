@@ -3,6 +3,7 @@
 #include <string>
 #include <format>
 #include <bit>
+#include <cstdint>
 
 using Bitboard = std::uint64_t;
 
@@ -21,24 +22,24 @@ Bitboard sqIndextoBB(int sq);
 
 std::string decToBinary(Bitboard x);
 
-bool isInBB(Bitboard& b, int sq);
+bool isInBB(Bitboard b, int sq);
 
 void fillSq(Bitboard& b, int sq);
 
 void rmSq(Bitboard& b, int sq);
 
-void printBB(Bitboard& b);
+void printBB(Bitboard b);
 
-int popcount(Bitboard& b);
+int popcount(Bitboard b);
 
-int lsb(Bitboard& b);
+int lsb(Bitboard b);
 
 int pop_lsb(Bitboard& b);
 
-Bitboard sN(Bitboard& b);
+Bitboard sN(Bitboard b);
 
-Bitboard sE(Bitboard& b);
+Bitboard sE(Bitboard b);
 
-Bitboard sS(Bitboard& b);
+Bitboard sS(Bitboard b);
 
-Bitboard sW(Bitboard& b);
+Bitboard sW(Bitboard b);

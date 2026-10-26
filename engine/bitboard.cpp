@@ -29,23 +29,18 @@ std::string decToBinary(Bitboard x) {
 }
 
 // Checks if a square (0-63) is occupied in a Bitboard
-bool isInBB(Bitboard& b, int sq) {
+bool isInBB(Bitboard b, int sq) {
 	return ((b >> sq) & 1);
 }
 
 // Fills a square in a Bitboard so it is occupied.
-// NOTE: Doesn't check if square is already occupied. Might want to add something for this later.
 void fillSq(Bitboard& b, int sq) {
-	if (((b >> sq) & 1) == 0) {
 		b |= 1ULL << sq;
-	}
 }
 
 // Removes a square in a Bitboard so it is no longer occupied.
 void rmSq(Bitboard& b, int sq) {
-	if (((b >> sq) & 1) == 1) {
 		b &= ~(1ULL << sq);
-	}
 }
 
 /*
@@ -54,7 +49,7 @@ void rmSq(Bitboard& b, int sq) {
 	. represents an empty square.
 	Also prints the hex value for that bitboard beneath the grid. 
 */ 
-void printBB(Bitboard& b) {
+void printBB(Bitboard b) {
 
 	int sq;
 
@@ -84,12 +79,12 @@ void printBB(Bitboard& b) {
 
 
 // Counts the number of set bits/occupied squares in a bitboard
-int popcount(Bitboard& b) {
+int popcount(Bitboard b) {
 	return std::popcount(b);
 }
 
 // Returns the index for the lowest occupied square (least significant bit)
-int lsb(Bitboard& b) {
+int lsb(Bitboard b) {
 	if (b == 0) {
 		return -1;
 	}
@@ -107,18 +102,18 @@ int pop_lsb(Bitboard& b) {
 	return l;
 }
 
-Bitboard sN(Bitboard& b) {
+Bitboard sN(Bitboard b) {
 	return b << 8;
 }
 
-Bitboard sE(Bitboard& b) {
+Bitboard sE(Bitboard b) {
 	return ((b << 1) & ~FILE_A);
 }
 
-Bitboard sS(Bitboard& b) {
+Bitboard sS(Bitboard b) {
 	return b >> 8;
 }
 
-Bitboard sW(Bitboard& b) {
+Bitboard sW(Bitboard b) {
 	return ((b >> 1) & ~FILE_H);
 }

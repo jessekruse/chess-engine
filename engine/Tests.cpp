@@ -48,4 +48,6 @@ void run_bitboard_tests() {
 	assert(popcount(b) == 0);
 
 	assert(lsb(empt) == -1); // Confirms that lsb of empty board is defined -1
+
+	std::cout << "All tests cleared" << std::endl;
 }
