@@ -1,7 +1,7 @@
 #include <iostream>
 #include <array>
 #include "ChessFunctions.h"
-#include "bitboard.h"
+#include "Bitboard.h"
 #include <cmath>
 #include "Tests.h"
 

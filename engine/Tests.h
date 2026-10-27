@@ -1,5 +1,5 @@
 #pragma once
-#include "bitboard.h"
+#include "Bitboard.h"
 #include <cassert>
 #include "ChessFunctions.h"
 

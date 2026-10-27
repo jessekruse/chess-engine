@@ -140,16 +140,16 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="bitboard.cpp" />
+    <ClCompile Include="Bitboard.cpp" />
     <ClCompile Include="ChessFunctions.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="greet.cpp" />
+    <ClCompile Include="Position.cpp" />
     <ClCompile Include="Tests.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="bitboard.h" />
+    <ClInclude Include="Bitboard.h" />
     <ClInclude Include="ChessFunctions.h" />
-    <ClInclude Include="greet.h" />
+    <ClInclude Include="Position.h" />
     <ClInclude Include="Tests.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
