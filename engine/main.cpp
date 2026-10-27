@@ -4,9 +4,15 @@
 #include "Bitboard.h"
 #include <cmath>
 #include "Tests.h"
+#include "Position.h"
 
 using namespace std;
 
 int main() {
-	run_bitboard_tests();
+	FEN fTest = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 1 2";
+
+	Position p;
+
+	p.loadFEN(fTest);
+	p.print();
 }

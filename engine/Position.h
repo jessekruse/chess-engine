@@ -6,10 +6,9 @@
 #include "ChessFunctions.h"
 #include <array>
 #include <string>
+#include <cctype>
 
 using FEN = std::string;
-
-FEN fTest = "rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2";
 
 enum class Color { white, black };
 
@@ -36,7 +35,8 @@ struct Position {
 	Bitboard enPassant = 0;
 	int halfmove = 0;
 	int fullmove = 1;
-	void loadFEN(FEN fen);
+	FEN fen;
+	void loadFEN(FEN f);
 	void print();
 	void printFEN();
 };
