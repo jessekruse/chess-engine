@@ -102,23 +102,27 @@ void Position::loadFEN(const FEN& f) {
 		tens_place = fen_parts[4][0] - '0';
 		ones_place = fen_parts[4][1] - '0';
 	}
-	else {
+	if (fen_parts[4].length() == 1) {
 		ones_place = fen_parts[4][0] - '0';
 	}
 
 	halfmove = hundreds_place * 100 + tens_place * 10 + ones_place;
 
+	hundreds_place = 0;
+	tens_place = 0;
+	ones_place = 0;
+
 	// Calculate fullmove
 	if (fen_parts[5].length() == 3) {
-		hundreds_place = fen_parts[4][0] - '0';
-		tens_place = fen_parts[4][0] - '0';
-		ones_place = fen_parts[4][1] - '0';
+		hundreds_place = fen_parts[5][0] - '0';
+		tens_place = fen_parts[5][1] - '0';
+		ones_place = fen_parts[5][2] - '0';
 	}
 	if (fen_parts[5].length() == 2) {
 		tens_place = fen_parts[5][0] - '0';
 		ones_place = fen_parts[5][1] - '0';
 	}
-	else {
+	if (fen_parts[5].length() == 1) {
 		ones_place = fen_parts[5][0] - '0';
 	}
 
