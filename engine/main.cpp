@@ -9,10 +9,10 @@
 using namespace std;
 
 int main() {
-	FEN fTest = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 1 2";
+	FEN fTest = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
 	Position p;
-
 	p.loadFEN(fTest);
 	p.print();
+
 }
