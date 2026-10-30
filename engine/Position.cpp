@@ -95,8 +95,8 @@ void Position::loadFEN(const FEN& f) {
 	
 	if (fen_parts[4].length() == 3) {
 		hundreds_place = fen_parts[4][0] - '0';
-		tens_place = fen_parts[4][0] - '0';
-		ones_place = fen_parts[4][1] - '0';
+		tens_place = fen_parts[4][1] - '0';
+		ones_place = fen_parts[4][2] - '0';
 	}
 	if (fen_parts[4].length() == 2) {
 		tens_place = fen_parts[4][0] - '0';
