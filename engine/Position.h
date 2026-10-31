@@ -10,6 +10,11 @@
 
 using FEN = std::string;
 
+inline constexpr int K = 0b0001;
+inline constexpr int Q = 0b0010;
+inline constexpr int k = 0b0100;
+inline constexpr int q = 0b1000;
+
 enum class Color { white, black };
 
 enum Piece {

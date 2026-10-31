@@ -1,7 +1,9 @@
 #include "Position.h"
+#include <iostream>
 
 // Loads a FEN string into the pieces Bitboards
 void Position::loadFEN(const FEN& f) {
+
 	int square = 56;	// Starting square is a file rank 8 = square 56
 	std::string lookup = "PRNBQKprnbqk"; // lookup table to find index matching piece number for pieces array 
 	int piece = 0;
@@ -33,24 +35,14 @@ void Position::loadFEN(const FEN& f) {
 			fillSq(pieces[piece], square); 
 			square++;
 		}
-
 	}
 
-	// Set side to move value
-	if (fen_parts[1][0] == 'w') {
-		sideToMove = Color::white;
-	}
-	if (fen_parts[1][0] == 'b') {
-		sideToMove = Color::black;
-	}
+
+	// Set side to move 
+	sideToMove = (fen_parts[1][0] == 'w') ? Color::white : Color::black;
 
 
 	// Set castling rights
-	int K = 0b0001;
-	int Q = 0b0010;
-	int k = 0b0100;
-	int q = 0b1000;
-
 	for (auto i = fen_parts[2].begin(); i != fen_parts[2].end(); ++i) {
 		if (*i == '-') {
 			canCastle = 0;
@@ -67,8 +59,8 @@ void Position::loadFEN(const FEN& f) {
 		if (*i == 'q') {
 			canCastle |= q;
 		}
-		
 	}
+
 
 	// Set en passant
 	char file{};
@@ -88,7 +80,7 @@ void Position::loadFEN(const FEN& f) {
 	if (fen_parts[3][0] != '-') fillSq(enPassant, squareIndex(file, rank));
 
 
-	// Set move count
+	// Set halfmove count
 	int ones_place = 0;
 	int tens_place = 0;
 	int hundreds_place = 0;
@@ -108,11 +100,12 @@ void Position::loadFEN(const FEN& f) {
 
 	halfmove = hundreds_place * 100 + tens_place * 10 + ones_place;
 
+
+	// Set fullmove count
 	hundreds_place = 0;
 	tens_place = 0;
 	ones_place = 0;
 
-	// Calculate fullmove
 	if (fen_parts[5].length() == 3) {
 		hundreds_place = fen_parts[5][0] - '0';
 		tens_place = fen_parts[5][1] - '0';
@@ -130,7 +123,7 @@ void Position::loadFEN(const FEN& f) {
 
 }
 
-// Prints the chess board
+// Prints the chess board state
 void Position::print() const {
 
 	std::string lookup = "PRNBQKprnbqk";
@@ -158,10 +151,10 @@ void Position::print() const {
 
 	// Print castling rights
 	std::string rights{};
-	if (isInBB(canCastle,0)) rights.push_back('K');
-	if (isInBB(canCastle,1)) rights.push_back('Q');
-	if (isInBB(canCastle,2)) rights.push_back('k');
-	if (isInBB(canCastle,3)) rights.push_back('q');
+	if ((canCastle & K) != 0) rights.push_back('K');
+	if ((canCastle & Q) != 0) rights.push_back('Q');
+	if ((canCastle & k) != 0) rights.push_back('k');
+	if ((canCastle & q) != 0) rights.push_back('q');
 	if (canCastle == 0) rights.push_back('-');
 
 	std::cout << "Castling Rights: " << rights << std::endl;
