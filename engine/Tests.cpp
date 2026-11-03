@@ -56,12 +56,13 @@ void run_bitboard_tests() {
 void run_position_tests() {
 	FEN fStart = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 	FEN fEnPassant = "rnbqkbnr/ppp1p1pp/8/3pPp2/8/8/PPPP1PPP/RNBQKBNR b KQkq f6 0 3";
+	FEN fEndGame = "8/4k3/8/4P3/4K3/8/8/8 w - - 0 1";
 	
 	Position p;
 	p.loadFEN(fStart);
 
 	assert(p.sideToMove == Color::white);
-	assert(p.canCastle == K | Q | k | q);
+	assert(p.canCastle == (K | Q | k | q));
 	assert(p.enPassant == 0);
 	assert(p.halfmove == 0);
 	assert(p.fullmove == 1);
@@ -70,6 +71,9 @@ void run_position_tests() {
 	assert(p.sideToMove == Color::black);
 	assert(p.enPassant == sqIndextoBB(squareIndex('f', '6')));
 
+	p.loadFEN(fEndGame);
+	assert(p.sideToMove == Color::white);
+	assert(p.canCastle == 0);
 
 	std::cout << "All tests cleared" << std::endl;
 }
