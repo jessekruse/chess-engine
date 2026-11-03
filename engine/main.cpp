@@ -14,10 +14,15 @@ int main() {
 	
 	Move from = squareIndex('e', '2');
 	Move to = squareIndex('e', '4');
-	Move flag = double_pawn_push;
+	Move flag = DOUBLE_PAWN_PUSH;
 
 	Move full_move = build_move(from, to, flag);
 
 	cout << format("{:#x}\n", full_move) << endl;
 
+	print_from(full_move);
+	print_to(full_move);
+	print_flag(full_move);
+
+	run_tests();
 }

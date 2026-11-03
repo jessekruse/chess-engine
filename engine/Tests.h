@@ -3,7 +3,6 @@
 #include <cassert>
 #include "ChessFunctions.h"
 #include "Position.h"
+#include "Move.h"
 
-void run_bitboard_tests();
-
-void run_position_tests();
+void run_tests();

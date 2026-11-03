@@ -1,6 +1,11 @@
 #include "Tests.h"
 
-void run_bitboard_tests() {
+void run_tests() {
+
+	//////////////////////////
+	// Bitboard.cpp tests
+	//////////////////////////
+
 	Bitboard empt = 0;
 
 	assert(sN(empt) == empt); // Shifting north on empty does nothing
@@ -49,15 +54,15 @@ void run_bitboard_tests() {
 
 	assert(lsb(empt) == -1); // Confirms that lsb of empty board is defined -1
 
-	std::cout << "All tests cleared" << std::endl;
-}
 
+	//////////////////////////////////
+	// Position.cpp Tests
+	//////////////////////////////////
 
-void run_position_tests() {
 	FEN fStart = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 	FEN fEnPassant = "rnbqkbnr/ppp1p1pp/8/3pPp2/8/8/PPPP1PPP/RNBQKBNR b KQkq f6 0 3";
 	FEN fEndGame = "8/4k3/8/4P3/4K3/8/8/8 w - - 0 1";
-	
+
 	Position p;
 	p.loadFEN(fStart);
 
@@ -75,5 +80,22 @@ void run_position_tests() {
 	assert(p.sideToMove == Color::white);
 	assert(p.canCastle == 0);
 
+	
+	/////////////////////////////
+	// Move.cpp tests
+	/////////////////////////////
+
+	Move from = squareIndex('e', '2');
+	Move to = squareIndex('e', '4');
+	Move flag = DOUBLE_PAWN_PUSH;
+
+	Move full_move = build_move(from, to, flag);
+	assert(full_move == 0x170C);
+
+	assert(get_from(full_move) == squareIndex('e', '2'));
+	assert(get_to(full_move) == squareIndex('e', '4'));
+	assert(get_flag(full_move) == DOUBLE_PAWN_PUSH);
+
 	std::cout << "All tests cleared" << std::endl;
 }
+
