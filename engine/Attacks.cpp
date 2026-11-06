@@ -9,7 +9,7 @@ std::array<std::array<Bitboard, 64>, 2> pawnAttacks;
 // Initialize knight attack table
 // masks[3-i] uses the symmetry that backward shifts need to have mirror image masks
 
-void init_knight_attacks() {
+static void init_knight_attacks() {
 
 	std::array<int, 4> jumps = { 17, 10, 6, 15};
 	std::array<Bitboard, 4> masks = { ~FILE_A, ~(FILE_A | FILE_B), ~(FILE_H | FILE_G), ~FILE_H };
@@ -28,7 +28,7 @@ void init_knight_attacks() {
 
 // Initialize king attack table
 
-void init_king_attacks() {
+static void init_king_attacks() {
 	std::array<int, 4> jumps = { 1, 7, 8, 9 };
 	std::array<Bitboard, 4> pos_masks = { ~FILE_A, ~FILE_H, ~Bitboard{0}, ~FILE_A};
 	std::array<Bitboard, 4> neg_masks = { ~FILE_H, ~FILE_A, ~Bitboard{0}, ~FILE_H};
@@ -48,7 +48,7 @@ void init_king_attacks() {
 // Initialize pawn attack table
 // masks[1-i] uses the symmetry that backward shifts need to have mirror image masks
 
-void init_pawn_attacks() {
+static void init_pawn_attacks() {
 	std::array<int, 2> jumps = { 7, 9 };
 	std::array<Bitboard, 2> masks = { ~FILE_H, ~FILE_A };
 
