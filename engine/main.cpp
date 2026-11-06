@@ -12,16 +12,16 @@ using namespace std;
 
 int main() {
 	
-	Move from = squareIndex('e', '5');
-	Move to = squareIndex('d', '6');
-	Move flag = EP_CAPTURE;
+	move_t from = squareIndex('e', '5');
+	move_t to = squareIndex('d', '6');
+	move_t flag = EP_CAPTURE;
 
-	Move full_move = build_move(from, to, flag);
+	Move m(from,to,flag);
 
-	cout << format("{:#x}\n", full_move) << endl;
+	cout << format("{:#x}\n", m.m) << endl;
 
-	print_from(full_move);
-	print_to(full_move);
-	print_flag(full_move);
+	m.print_from();
+	m.print_to();
+	m.print_flag();
 
 }

@@ -2,35 +2,45 @@
 #include <cstdint>
 #include "ChessFunctions.h"
 
-using Move = uint16_t;
+using move_t = uint16_t;
 
-inline constexpr Move QUIET_MOVE = 0;
-inline constexpr Move DOUBLE_PAWN_PUSH = 0b0001;
-inline constexpr Move KING_CASTLE = 0b0010;
-inline constexpr Move QUEEN_CASTLE = 0b0011;
-inline constexpr Move CAPTURE = 0b0100;
-inline constexpr Move EP_CAPTURE = 0b0101;
-inline constexpr Move KNIGHT_PROMO = 0b1000;
-inline constexpr Move BISHOP_PROMO = 0b1001;
-inline constexpr Move ROOK_PROMO = 0b1010;
-inline constexpr Move QUEEN_PROMO = 0b1011;
-inline constexpr Move KNIGHT_PROMO_CAP = 0b1100;
-inline constexpr Move BISHOP_PROMO_CAP = 0b1101;
-inline constexpr Move ROOK_PROMO_CAP = 0b1110;
-inline constexpr Move QUEEN_PROMO_CAP = 0b1111;
+inline constexpr move_t QUIET_MOVE = 0;
+inline constexpr move_t DOUBLE_PAWN_PUSH = 0b0001;
+inline constexpr move_t KING_CASTLE = 0b0010;
+inline constexpr move_t QUEEN_CASTLE = 0b0011;
+inline constexpr move_t CAPTURE = 0b0100;
+inline constexpr move_t EP_CAPTURE = 0b0101;
+inline constexpr move_t KNIGHT_PROMO = 0b1000;
+inline constexpr move_t BISHOP_PROMO = 0b1001;
+inline constexpr move_t ROOK_PROMO = 0b1010;
+inline constexpr move_t QUEEN_PROMO = 0b1011;
+inline constexpr move_t KNIGHT_PROMO_CAP = 0b1100;
+inline constexpr move_t BISHOP_PROMO_CAP = 0b1101;
+inline constexpr move_t ROOK_PROMO_CAP = 0b1110;
+inline constexpr move_t QUEEN_PROMO_CAP = 0b1111;
 
+inline constexpr move_t CAP_BIT = 0x4000;
+inline constexpr move_t PROMO_BIT = 0x8000;
 
-Move build_move(Move from, Move to, Move Flags);
-Move get_from(Move m);
-Move get_to(Move m);
-Move get_flag(Move m);
-void print_from(Move m);
-void print_to(Move m);
-void print_flag(Move m);
+struct Move {
+	move_t m;
 
-inline constexpr Move CAP_BIT = 0x4000; 
-inline constexpr Move PROMO_BIT = 0x8000;
+	// Default constructor
+	Move() {
+		m = 0;
+	}
+	// Parameterized constructor
+	Move(move_t from, move_t to, move_t flag) : m(from | (to << 6) | (flag << 12)) {}
 
-inline bool isCapture(Move m) { return m & CAP_BIT; };
-inline bool isPromotion(Move m) { return m & PROMO_BIT; };
+	move_t get_from() const { return (m & 0x3f); };
+	move_t get_to() const { return (m >> 6) & 0x3f; };
+	move_t get_flag() const { return (m >> 12) & 0x0f; };
+
+	void print_from() const;
+	void print_to() const;
+	void print_flag() const;
+
+	bool isCapture() const { return m & CAP_BIT; };
+	bool isPromotion() const { return m & PROMO_BIT; };
+};
 

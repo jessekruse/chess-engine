@@ -85,16 +85,16 @@ void run_tests() {
 	// Move.cpp tests
 	/////////////////////////////
 
-	Move from = squareIndex('e', '2');
-	Move to = squareIndex('e', '4');
-	Move flag = DOUBLE_PAWN_PUSH;
+	move_t from = squareIndex('e', '2');
+	move_t to = squareIndex('e', '4');
+	move_t flag = DOUBLE_PAWN_PUSH;
 
-	Move full_move = build_move(from, to, flag);
-	assert(full_move == 0x170C);
+	Move full_move(from, to, flag);
+	assert(full_move.m == 0x170C);
 
-	assert(get_from(full_move) == squareIndex('e', '2'));
-	assert(get_to(full_move) == squareIndex('e', '4'));
-	assert(get_flag(full_move) == DOUBLE_PAWN_PUSH);
+	assert(full_move.get_from() == squareIndex('e', '2'));
+	assert(full_move.get_to() == squareIndex('e', '4'));
+	assert(full_move.get_flag() == DOUBLE_PAWN_PUSH);
 
 	std::cout << "All tests cleared" << std::endl;
 }

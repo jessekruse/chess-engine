@@ -1,32 +1,17 @@
 #include "Move.h"
 #include <iostream>
 
-Move build_move(Move from, Move to, Move Flags) {
-	return (from | (to << 6) | (Flags << 12));
+
+void Move::print_from() const {
+	std::cout << "Starting square: " << squareName(get_from()) << std::endl;
 }
 
-Move get_from(Move m) {
-	return (m & 0x3f);
+void Move::print_to() const {
+	std::cout << "Ending square: " << squareName(get_to()) << std::endl;
 }
 
-Move get_to(Move m) {
-	return (m >> 6) & 0x3f;
-}
-
-Move get_flag(Move m) {
-	return (m >> 12) & 0x0f;
-}
-
-void print_from(Move m) {
-	std::cout << "Starting square: " << squareName(get_from(m)) << std::endl;
-}
-
-void print_to(Move m) {
-	std::cout << "Ending square: " << squareName(get_to(m)) << std::endl;
-}
-
-void print_flag(Move m) {
-	Move flag = get_flag(m);
+void Move::print_flag() const {
+	move_t flag = get_flag();
 
 	if (flag == QUIET_MOVE) std::cout << "Flag: quiet move" << std::endl;
 	if (flag == DOUBLE_PAWN_PUSH) std::cout << "Flag: double pawn push" << std::endl;
