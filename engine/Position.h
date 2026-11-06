@@ -7,6 +7,7 @@
 #include <cctype>
 #include <sstream>
 #include <vector>
+#include <string_view>
 
 using FEN = std::string;
 
@@ -15,7 +16,11 @@ inline constexpr int Q = 0b0010;
 inline constexpr int k = 0b0100;
 inline constexpr int q = 0b1000;
 
-enum class Color { white, black };
+inline constexpr std::string_view lookup = "PRNBQKprnbqk";
+
+enum Color { WHITE, BLACK };
+
+inline int opposite(Color c) { return c ^ 1; };
 
 enum Piece {
 	wPawn,
@@ -35,7 +40,7 @@ enum Piece {
 
 struct Position {
 	std::array<Bitboard, PieceCount> pieces{};
-	Color sideToMove = Color::white;
+	Color sideToMove = WHITE;
 	std::uint8_t canCastle = 0;
 	Bitboard enPassant = 0;
 	int halfmove = 0;

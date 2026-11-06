@@ -27,3 +27,10 @@ Move get_flag(Move m);
 void print_from(Move m);
 void print_to(Move m);
 void print_flag(Move m);
+
+inline constexpr Move CAP_BIT = 0x4000; 
+inline constexpr Move PROMO_BIT = 0x8000;
+
+inline bool isCapture(Move m) { return m & CAP_BIT; };
+inline bool isPromotion(Move m) { return m & PROMO_BIT; };
+

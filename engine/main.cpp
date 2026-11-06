@@ -12,9 +12,9 @@ using namespace std;
 
 int main() {
 	
-	Move from = squareIndex('e', '2');
-	Move to = squareIndex('e', '4');
-	Move flag = DOUBLE_PAWN_PUSH;
+	Move from = squareIndex('e', '5');
+	Move to = squareIndex('d', '6');
+	Move flag = EP_CAPTURE;
 
 	Move full_move = build_move(from, to, flag);
 
@@ -24,5 +24,4 @@ int main() {
 	print_to(full_move);
 	print_flag(full_move);
 
-	run_tests();
 }

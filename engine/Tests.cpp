@@ -66,18 +66,18 @@ void run_tests() {
 	Position p;
 	p.loadFEN(fStart);
 
-	assert(p.sideToMove == Color::white);
+	assert(p.sideToMove == WHITE);
 	assert(p.canCastle == (K | Q | k | q));
 	assert(p.enPassant == 0);
 	assert(p.halfmove == 0);
 	assert(p.fullmove == 1);
 
 	p.loadFEN(fEnPassant);
-	assert(p.sideToMove == Color::black);
+	assert(p.sideToMove == BLACK);
 	assert(p.enPassant == sqIndextoBB(squareIndex('f', '6')));
 
 	p.loadFEN(fEndGame);
-	assert(p.sideToMove == Color::white);
+	assert(p.sideToMove == WHITE);
 	assert(p.canCastle == 0);
 
 	

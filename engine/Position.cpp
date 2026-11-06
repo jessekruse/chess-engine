@@ -5,7 +5,6 @@
 void Position::loadFEN(const FEN& f) {
 
 	int square = 56;	// Starting square is a file rank 8 = square 56
-	std::string lookup = "PRNBQKprnbqk"; // lookup table to find index matching piece number for pieces array 
 	int piece = 0;
 
 	// Break FEN into its 6 fields
@@ -39,7 +38,7 @@ void Position::loadFEN(const FEN& f) {
 
 
 	// Set side to move 
-	sideToMove = (fen_parts[1][0] == 'w') ? Color::white : Color::black;
+	sideToMove = (fen_parts[1][0] == 'w') ? WHITE : BLACK;
 
 
 	// Set castling rights
@@ -126,7 +125,6 @@ void Position::loadFEN(const FEN& f) {
 // Prints the chess board state
 void Position::print() const {
 
-	std::string lookup = "PRNBQKprnbqk";
 	int piece = 0;
 
 	std::array<char, 64> board{};
@@ -147,7 +145,7 @@ void Position::print() const {
 	printBoard(board);
 
 	// Print side to move
-	std::cout << "\nSide to Move: " << ((sideToMove == Color::white) ? "White" : "Black") << std::endl;
+	std::cout << "\nSide to Move: " << ((sideToMove == WHITE) ? "White" : "Black") << std::endl;
 
 	// Print castling rights
 	std::string rights{};
