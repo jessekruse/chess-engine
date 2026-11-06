@@ -1,6 +1,8 @@
 #include "Move.h"
 #include <iostream>
-
+#include "ChessFunctions.h"
+#include <string>
+#include <array>
 
 void Move::print_from() const {
 	std::cout << "Starting square: " << squareName(get_from()) << std::endl;
@@ -13,19 +15,24 @@ void Move::print_to() const {
 void Move::print_flag() const {
 	move_t flag = get_flag();
 
-	if (flag == QUIET_MOVE) std::cout << "Flag: quiet move" << std::endl;
-	if (flag == DOUBLE_PAWN_PUSH) std::cout << "Flag: double pawn push" << std::endl;
-	if (flag == KING_CASTLE) std::cout << "Flag: king castle" << std::endl;
-	if (flag == QUEEN_CASTLE) std::cout << "Flag: queen castle" << std::endl;
-	if (flag == CAPTURE) std::cout << "Flag: capture" << std::endl;
-	if (flag == EP_CAPTURE) std::cout << "Flag: en passant capture" << std::endl;
-	if (flag == KNIGHT_PROMO) std::cout << "Flag: promote to knight" << std::endl;
-	if (flag == BISHOP_PROMO) std::cout << "Flag: promote to bishop" << std::endl;
-	if (flag == ROOK_PROMO) std::cout << "Flag: promote to rook" << std::endl;
-	if (flag == QUEEN_PROMO) std::cout << "Flag: promote to queen" << std::endl;
-	if (flag == KNIGHT_PROMO_CAP) std::cout << "Flag: promote to knight with capture" << std::endl;
-	if (flag == BISHOP_PROMO_CAP) std::cout << "Flag: promote to bishop with capture" << std::endl;
-	if (flag == ROOK_PROMO_CAP) std::cout << "Flag: promote to rook with capture" << std::endl;
-	if (flag == QUEEN_PROMO_CAP) std::cout << "Flag: promote to queen with capture" << std::endl;
+	std::array<std::string, 16> flag_names = {
+		"Flag: quiet move",
+		"Flag: double pawn push",
+		"Flag: king castle",
+		"Flag: queen castle",
+		"Flag: capture",
+		"Flag: en passant capture",
+		"Flag: promote to knight",
+		"Flag: promote to bishop",
+		"Flag: promote to rook",
+		"Flag: promote to queen",
+		"Flag: promote to knight with capture",
+		"Flag: promote to bishop with capture",
+		"Flag: promote to rook with capture",
+		"Flag: promote to queen with capture"
+	};
+
+	std::cout << flag_names[flag] << std::endl;
+
 }
 

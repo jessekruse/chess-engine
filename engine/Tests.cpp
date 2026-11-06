@@ -96,6 +96,18 @@ void run_tests() {
 	assert(full_move.get_to() == squareIndex('e', '4'));
 	assert(full_move.get_flag() == DOUBLE_PAWN_PUSH);
 
+	full_move.m = 0xFE31;
+	assert(full_move.isCapture());
+	assert(full_move.isPromotion());
+
+	full_move.m = 0x5AE4;
+	assert(full_move.isCapture());
+	assert(full_move.isPromotion() == 0);
+
+	full_move.m = 0x170C;
+	assert(full_move.isCapture() == 0);
+	assert(full_move.isPromotion() == 0);
+
 	std::cout << "All tests cleared" << std::endl;
 }
 

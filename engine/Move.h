@@ -1,6 +1,5 @@
 #pragma once
 #include <cstdint>
-#include "ChessFunctions.h"
 
 using move_t = uint16_t;
 
@@ -23,24 +22,30 @@ inline constexpr move_t CAP_BIT = 0x4000;
 inline constexpr move_t PROMO_BIT = 0x8000;
 
 struct Move {
-	move_t m;
+	move_t m = 0;
+	Move() = default;
 
-	// Default constructor
-	Move() {
-		m = 0;
-	}
 	// Parameterized constructor
 	Move(move_t from, move_t to, move_t flag) : m(from | (to << 6) | (flag << 12)) {}
 
-	move_t get_from() const { return (m & 0x3f); };
-	move_t get_to() const { return (m >> 6) & 0x3f; };
-	move_t get_flag() const { return (m >> 12) & 0x0f; };
+	move_t get_from() const { return (m & 0x3f); }
+	move_t get_to() const { return (m >> 6) & 0x3f; }
+	move_t get_flag() const { return (m >> 12) & 0x0f; }
 
 	void print_from() const;
 	void print_to() const;
 	void print_flag() const;
 
-	bool isCapture() const { return m & CAP_BIT; };
-	bool isPromotion() const { return m & PROMO_BIT; };
+	bool isCapture() const { return m & CAP_BIT; }
+	bool isPromotion() const { return m & PROMO_BIT; }
+
+	bool operator==(const Move& other) const {
+		return m == other.m;
+	}
+	bool operator!=(const Move& other) const {
+		return m != other.m;
+	}
 };
+
+static_assert(sizeof(Move) == 2);
 
