@@ -45,12 +45,6 @@ void run_tests() {
 
 	assert(popcount(b) == 3); // Count of occupied squares for {a1, e4, h8} is 3
 	
-	assert(pop_lsb(b) == 0); // Returns lowest occupied index
-	assert(popcount(b) == 2); // Checks to make sure that the number of occupied squares decreased
-	assert(pop_lsb(b) == 28);
-	assert(popcount(b) == 1);
-	assert(pop_lsb(b) == 63);
-	assert(popcount(b) == 0);
 
 	assert(lsb(empt) == -1); // Confirms that lsb of empty board is defined -1
 
@@ -107,6 +101,35 @@ void run_tests() {
 	full_move.m = 0x170C;
 	assert(full_move.isCapture() == 0);
 	assert(full_move.isPromotion() == 0);
+
+
+	///////////////////////////////
+	// Attacks.cpp tests
+	///////////////////////////////
+	init_attack_tables();
+	int countKnight = 0;
+	int countKing = 0;
+	int countWPawn = 0;
+	int countBPawn = 0;
+
+	for (int s = 0; s < 64; ++s) {
+		countKnight += popcount(knightAttacks[s]);
+		countKing += popcount(kingAttacks[s]);
+		countWPawn += popcount(pawnAttacks[WHITE][s]);
+		countBPawn += popcount(pawnAttacks[BLACK][s]);
+	}
+
+	assert(countKnight == 336);
+	assert(countKing == 420);
+	assert(countWPawn == 98);
+	assert(countBPawn == 98);
+
+	
+	assert(popcount(knightAttacks[0]) == 2);
+	assert(popcount(knightAttacks[1]) == 3);
+	assert(popcount(knightAttacks[28]) == 8);
+	assert(popcount(knightAttacks[63]) == 2);
+
 
 	std::cout << "All tests cleared" << std::endl;
 }

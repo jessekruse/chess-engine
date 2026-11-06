@@ -13,13 +13,6 @@ using namespace std;
 
 int main() {
 	
-	init_attack_tables();
-
-	int s = 28;
-
-	printBB(knightAttacks[s]);
-	printBB(kingAttacks[s]);
-	printBB(pawnAttacks[WHITE][s]);
-	printBB(pawnAttacks[BLACK][s]);
+	run_tests();
 
 }
