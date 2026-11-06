@@ -1,5 +1,8 @@
 #pragma once
 #include <cstdint>
+#include <string>
+#include <array>
+#include <string_view>
 
 using move_t = uint16_t;
 
@@ -20,6 +23,25 @@ inline constexpr move_t QUEEN_PROMO_CAP = 0b1111;
 
 inline constexpr move_t CAP_BIT = 0x4000;
 inline constexpr move_t PROMO_BIT = 0x8000;
+
+inline constexpr std::array<std::string_view, 16> flag_names = {
+		"Flag: quiet move",
+		"Flag: double pawn push",
+		"Flag: king castle",
+		"Flag: queen castle",
+		"Flag: capture",
+		"Flag: en passant capture",
+		"Flag: (unused)",
+		"Flag: (unused)",
+		"Flag: promote to knight",
+		"Flag: promote to bishop",
+		"Flag: promote to rook",
+		"Flag: promote to queen",
+		"Flag: promote to knight with capture",
+		"Flag: promote to bishop with capture",
+		"Flag: promote to rook with capture",
+		"Flag: promote to queen with capture"
+};
 
 struct Move {
 	move_t m = 0;

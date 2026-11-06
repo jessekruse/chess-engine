@@ -7,21 +7,19 @@
 #include "Position.h"
 #include "Move.h"
 #include <format>
+#include "Attacks.h"
 
 using namespace std;
 
 int main() {
 	
-	move_t from = squareIndex('e', '5');
-	move_t to = squareIndex('d', '6');
-	move_t flag = EP_CAPTURE;
+	init_attack_tables();
 
-	Move m(from,to,flag);
+	int s = 28;
 
-	cout << format("{:#x}\n", m.m) << endl;
-
-	m.print_from();
-	m.print_to();
-	m.print_flag();
+	printBB(knightAttacks[s]);
+	printBB(kingAttacks[s]);
+	printBB(pawnAttacks[WHITE][s]);
+	printBB(pawnAttacks[BLACK][s]);
 
 }
