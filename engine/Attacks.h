@@ -14,3 +14,5 @@ Bitboard rookAttacks(int sq, Bitboard occupied);
 Bitboard bishopAttacks(int sq, Bitboard occupied);
 
 Bitboard queenAttacks(int sq, Bitboard occupied);
+
+Bitboard rayWalk(int sq, Bitboard occupied, int r_delta, int f_delta);
