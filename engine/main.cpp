@@ -12,7 +12,13 @@
 using namespace std;
 
 int main() {
-	
-	run_tests();
 
+	int sq = squareIndex('e', '4');
+
+	Bitboard occupied = sqIndextoBB(squareIndex('c', '2'));
+	fillSq(occupied, squareIndex('b', '4'));
+	
+	printBB(rookAttacks(sq, occupied));
+	printBB(bishopAttacks(sq, occupied));
+	printBB(queenAttacks(sq, occupied));
 }

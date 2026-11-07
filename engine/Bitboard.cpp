@@ -9,6 +9,16 @@ int rankFiletoSqIndex(int rank, int file) {
 	else return rank * 8 + file;
 }
 
+std::array<int, 2> sqIndextoRankFile(int sq) {
+	std::array<int, 2> rankFile{};
+	
+	int r = sq / 8;
+	int f = sq % 8;
+
+	rankFile = { r, f };
+	return rankFile;
+}
+
 // Takes an individual square index and converts it into a Bitboard
 // Not particularly useful
 Bitboard sqIndextoBB(int sq) {

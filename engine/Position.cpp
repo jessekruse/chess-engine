@@ -4,6 +4,9 @@
 // Loads a FEN string into the pieces Bitboards
 void Position::loadFEN(const FEN& f) {
 
+	// Clear all pieces first
+	pieces.fill(0);
+
 	int square = 56;	// Starting square is a file rank 8 = square 56
 	int piece = 0;
 
@@ -35,6 +38,13 @@ void Position::loadFEN(const FEN& f) {
 			square++;
 		}
 	}
+
+	// Set combined pieces bitboards
+	for (int p = 0;p < 6;++p) {
+		pieces[allWhite] |= pieces[p];
+		pieces[allBlack] |= pieces[p + 6];
+	}
+	pieces[allPieces] = pieces[allWhite] | pieces[allBlack];
 
 
 	// Set side to move 

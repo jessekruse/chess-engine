@@ -125,10 +125,10 @@ void run_tests() {
 	assert(countBPawn == 98);
 
 	
-	assert(popcount(knightAttacks[0]) == 2);
-	assert(popcount(knightAttacks[1]) == 3);
-	assert(popcount(knightAttacks[28]) == 8);
-	assert(popcount(knightAttacks[63]) == 2);
+	assert(popcount(knightAttacks[squareIndex('a','1')]) == 2);
+	assert(popcount(knightAttacks[squareIndex('b','1')]) == 3);
+	assert(popcount(knightAttacks[squareIndex('e','4')]) == 8);
+	assert(popcount(knightAttacks[squareIndex('h','8')]) == 2);
 
 
 	std::cout << "All tests cleared" << std::endl;

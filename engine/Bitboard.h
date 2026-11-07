@@ -4,6 +4,7 @@
 #include <format>
 #include <bit>
 #include <cstdint>
+#include <array>
 
 using Bitboard = std::uint64_t;
 
@@ -17,6 +18,8 @@ inline constexpr Bitboard FILE_G{ 0x4040404040404040 };
 inline constexpr Bitboard FILE_H{ 0x8080808080808080 };
 
 int rankFiletoSqIndex(int rank, int file);
+
+std::array<int, 2> sqIndextoRankFile(int sq);
 
 Bitboard sqIndextoBB(int sq);
 

@@ -68,3 +68,184 @@ void init_attack_tables() {
 	init_king_attacks();
 	init_pawn_attacks();
 }
+
+Bitboard rookAttacks(int sq, Bitboard occupied) {
+
+	Bitboard b = sqIndextoBB(sq); 
+
+	std::array<int, 2> RF = sqIndextoRankFile(sq);
+	int r_start = RF[0];
+	int f_start = RF[1];
+
+	// Fill north ray
+	for (int i = 1; i < 8; ++i) {
+
+		// Walk north
+		int r_new = r_start + i;
+
+		// Check if off board
+		if (r_new >= 8) break;
+
+		// Compute new square index
+		int sq_new = rankFiletoSqIndex(r_new, f_start);
+
+		// Fill bitboard
+		fillSq(b, sq_new);
+
+		// End walk if occupied by a piece
+		if (isInBB(occupied, sq_new)) break;
+	}
+
+	// Fill south ray
+	for (int i = 1; i < 8; ++i) {
+
+		// Walk south
+		int r_new = r_start - i;
+
+		// Check if off board
+		if (r_new < 0) break;
+
+		// Compute new square index
+		int sq_new = rankFiletoSqIndex(r_new, f_start);
+
+		// Fill bitboard
+		fillSq(b, sq_new);
+
+		// End walk if occupied by a piece
+		if (isInBB(occupied, sq_new)) break;
+	}
+
+	// Fill east ray
+	for (int i = 1; i < 8; ++i) {
+
+		// Walk east
+		int f_new = f_start + i;
+
+		// Check if off board
+		if (f_new >= 8) break;
+
+		// Compute new square index
+		int sq_new = rankFiletoSqIndex(r_start, f_new);
+
+		// Fill bitboard
+		fillSq(b, sq_new);
+
+		// End walk if occupied by a piece
+		if (isInBB(occupied, sq_new)) break;
+	}
+
+	// Fill west ray
+	for (int i = 1; i < 8; ++i) {
+
+		// Walk west
+		int f_new = f_start - i;
+
+		// Check if off board
+		if (f_new < 0) break;
+
+		// Compute new square index
+		int sq_new = rankFiletoSqIndex(r_start, f_new);
+
+		// Fill bitboard
+		fillSq(b, sq_new);
+
+		// End walk if occupied by a piece
+		if (isInBB(occupied, sq_new)) break;
+	}
+
+	return b;
+}
+
+Bitboard bishopAttacks(int sq, Bitboard occupied) {
+	Bitboard b = sqIndextoBB(sq);
+
+	std::array<int, 2> RF = sqIndextoRankFile(sq);
+	int r_start = RF[0];
+	int f_start = RF[1];
+
+	// Fill north east ray
+	for (int i = 1; i < 8; ++i) {
+
+		// Walk north east
+		int r_new = r_start + i;
+		int f_new = f_start + i;
+
+		// Check if off board
+		if ((r_new >= 8) || (r_new < 0) || (f_new >= 8) || (f_new < 0)) break;
+
+		// Compute new square index
+		int sq_new = rankFiletoSqIndex(r_new, f_new);
+
+		// Fill bitboard
+		fillSq(b, sq_new);
+
+		// End walk if occupied by a piece
+		if (isInBB(occupied, sq_new)) break;
+	}
+
+	// Fill north west ray
+	for (int i = 1; i < 8; ++i) {
+
+		// Walk north west 
+		int r_new = r_start + i;
+		int f_new = f_start - i;
+
+		// Check if off board
+		if ((r_new >= 8) || (r_new < 0) || (f_new >= 8) || (f_new < 0)) break;
+
+		// Compute new square index
+		int sq_new = rankFiletoSqIndex(r_new, f_new);
+
+		// Fill bitboard
+		fillSq(b, sq_new);
+
+		// End walk if occupied by a piece
+		if (isInBB(occupied, sq_new)) break;
+	}
+
+	// Fill south east ray
+	for (int i = 1; i < 8; ++i) {
+
+		// Walk south east
+		int r_new = r_start - i;
+		int f_new = f_start + i;
+
+		// Check if off board
+		if ((r_new >= 8) || (r_new < 0) || (f_new >= 8) || (f_new < 0)) break;
+
+		// Compute new square index
+		int sq_new = rankFiletoSqIndex(r_new, f_new);
+
+		// Fill bitboard
+		fillSq(b, sq_new);
+
+		// End walk if occupied by a piece
+		if (isInBB(occupied, sq_new)) break;
+	}
+
+	// Fill south west ray
+	for (int i = 1; i < 8; ++i) {
+
+		// Walk north east
+		int r_new = r_start - i;
+		int f_new = f_start - i;
+
+		// Check if off board
+		if ((r_new >= 8) || (r_new < 0) || (f_new >= 8) || (f_new < 0)) break;
+
+		// Compute new square index
+		int sq_new = rankFiletoSqIndex(r_new, f_new);
+
+		// Fill bitboard
+		fillSq(b, sq_new);
+
+		// End walk if occupied by a piece
+		if (isInBB(occupied, sq_new)) break;
+	}
+
+	return b;
+}
+
+Bitboard queenAttacks(int sq, Bitboard occupied) {
+	return rookAttacks(sq, occupied) | bishopAttacks(sq, occupied);
+}

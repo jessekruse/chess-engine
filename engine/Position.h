@@ -35,6 +35,9 @@ enum Piece {
 	bBishop,
 	bQueen,
 	bKing,
+	allWhite,
+	allBlack,
+	allPieces,
 	PieceCount,
 };
 
