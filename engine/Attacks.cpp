@@ -67,9 +67,10 @@ void init_attack_tables() {
 	init_knight_attacks();
 	init_king_attacks();
 	init_pawn_attacks();
+
 }
 
-Bitboard rayWalk(int sq, Bitboard occupied, int r_delta, int f_delta) {
+static Bitboard rayWalk(int sq, Bitboard occupied, int r_delta, int f_delta) {
 	Bitboard b = 0;
 
 	std::array<int, 2> RF = sqIndextoRankFile(sq);

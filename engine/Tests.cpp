@@ -65,6 +65,9 @@ void run_tests() {
 	assert(p.enPassant == 0);
 	assert(p.halfmove == 0);
 	assert(p.fullmove == 1);
+	assert(popcount(p.pieces[allWhite]) == 16);
+	assert(popcount(p.pieces[allBlack]) == 16);
+	assert(popcount(p.pieces[allPieces]) == 32);
 
 	p.loadFEN(fEnPassant);
 	assert(p.sideToMove == BLACK);
@@ -106,7 +109,6 @@ void run_tests() {
 	///////////////////////////////
 	// Attacks.cpp tests
 	///////////////////////////////
-	init_attack_tables();
 	int countKnight = 0;
 	int countKing = 0;
 	int countWPawn = 0;
@@ -129,6 +131,23 @@ void run_tests() {
 	assert(popcount(knightAttacks[squareIndex('b','1')]) == 3);
 	assert(popcount(knightAttacks[squareIndex('e','4')]) == 8);
 	assert(popcount(knightAttacks[squareIndex('h','8')]) == 2);
+
+	int countRook = 0;
+	int countBishop = 0;
+	int countQueen = 0;
+
+	for (int s = 0; s < 64; ++s) {
+		countRook += popcount(rookAttacks(s, 0));
+		countBishop += popcount(bishopAttacks(s, 0));
+		countQueen += popcount(queenAttacks(s, 0));
+	}
+
+	assert(countRook == 896);
+	assert(countBishop == 560);
+	assert(countQueen == 1456);
+
+	assert(popcount(bishopAttacks(squareIndex('a', '1'), 0)) == 7);
+	assert(popcount(bishopAttacks(squareIndex('d', '4'), 0)) == 13);
 
 
 	std::cout << "All tests cleared" << std::endl;

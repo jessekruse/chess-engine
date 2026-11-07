@@ -12,6 +12,7 @@
 using namespace std;
 
 int main() {
+	init_attack_tables();
 
 	int sq = squareIndex('e', '4');
 
@@ -21,4 +22,6 @@ int main() {
 	printBB(rookAttacks(sq, occupied));
 	printBB(bishopAttacks(sq, occupied));
 	printBB(queenAttacks(sq, occupied));
+
+	run_tests();
 }
