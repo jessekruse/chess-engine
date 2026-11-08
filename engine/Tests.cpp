@@ -72,6 +72,8 @@ void run_tests() {
 	p.loadFEN(fEnPassant);
 	assert(p.sideToMove == BLACK);
 	assert(p.enPassant == sqIndextoBB(squareIndex('f', '6')));
+	assert(p.pieces[allPieces] == (p.pieces[allWhite] | p.pieces[allBlack]));
+	assert((p.pieces[allWhite] & p.pieces[allBlack]) == 0);
 
 	p.loadFEN(fEndGame);
 	assert(p.sideToMove == WHITE);
@@ -148,6 +150,20 @@ void run_tests() {
 
 	assert(popcount(bishopAttacks(squareIndex('a', '1'), 0)) == 7);
 	assert(popcount(bishopAttacks(squareIndex('d', '4'), 0)) == 13);
+
+	int sq = squareIndex('d', '4');
+	b = sqIndextoBB(sq);
+	Bitboard occupied = sqIndextoBB(squareIndex('d','6'));
+	fillSq(occupied, squareIndex('g','4'));
+
+	assert(popcount(rookAttacks(sq, occupied)) == 11);
+	assert(isInBB(rookAttacks(sq, occupied), squareIndex('d', '6')));
+	assert(isInBB(rookAttacks(sq, occupied), squareIndex('g', '4')));
+	assert(!isInBB(rookAttacks(sq, occupied), squareIndex('d', '7')));
+	assert(!isInBB(rookAttacks(sq, occupied), squareIndex('h', '4')));
+
+
+
 
 
 	std::cout << "All tests cleared" << std::endl;

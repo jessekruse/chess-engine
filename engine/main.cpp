@@ -14,14 +14,12 @@ using namespace std;
 int main() {
 	init_attack_tables();
 
-	int sq = squareIndex('e', '4');
+	int sq = squareIndex('d', '4');
 
-	Bitboard occupied = sqIndextoBB(squareIndex('c', '2'));
-	fillSq(occupied, squareIndex('b', '4'));
+	Bitboard occupied = sqIndextoBB(squareIndex('d', '6'));
+	fillSq(occupied, squareIndex('g', '4'));
 	
 	printBB(rookAttacks(sq, occupied));
-	printBB(bishopAttacks(sq, occupied));
-	printBB(queenAttacks(sq, occupied));
 
 	run_tests();
 }
