@@ -18,3 +18,32 @@ void Move::print_flag() const {
 
 }
 
+void Move::print_move() const {
+	print_from();
+	print_to();
+	print_flag();
+}
+
+void MoveList::add(Move m) {
+
+	Move empty;
+
+	for (auto i = list.begin(); i != list.end(); ++i) {
+		if (*i != empty) continue;
+		if (*i == empty) {
+			*i = m;
+			break;
+		}
+	}
+}
+
+int MoveList::count() {
+	int count = 0;
+	Move empty;
+
+	for (auto i = list.begin(); i != list.end(); ++i) {
+		if (*i != empty) ++count;
+		if (*i == empty) break;
+	}
+	return count;
+}

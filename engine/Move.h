@@ -57,6 +57,7 @@ struct Move {
 	void print_from() const;
 	void print_to() const;
 	void print_flag() const;
+	void print_move() const;
 
 	bool isCapture() const { return m & CAP_BIT; }
 	bool isPromotion() const { return m & PROMO_BIT; }
@@ -71,3 +72,8 @@ struct Move {
 
 static_assert(sizeof(Move) == 2);
 
+struct MoveList {
+	std::array<Move, 256> list{};
+	void add(Move m);
+	int count();
+};

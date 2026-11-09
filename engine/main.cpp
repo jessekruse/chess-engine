@@ -14,12 +14,22 @@ using namespace std;
 int main() {
 	init_attack_tables();
 
-	int sq = squareIndex('d', '4');
+	move_t from = squareIndex('e', '2');
+	move_t to = squareIndex('e', '4');
+	move_t flag = DOUBLE_PAWN_PUSH;
 
-	Bitboard occupied = sqIndextoBB(squareIndex('d', '6'));
-	fillSq(occupied, squareIndex('g', '4'));
-	
-	printBB(rookAttacks(sq, occupied));
+	Move m(from, to, flag);
+
+	MoveList ml;
+
+	cout << ml.count() << endl;
+
+	ml.add(m);
+	ml.add(m);
+
+	cout << ml.count() << endl;
+
+	ml.list[0].print_move();
 
 	run_tests();
 }
