@@ -46,7 +46,7 @@ static void genPieceMoves(int piece_type, const Position& p, MoveList& move_list
 	}
 }
 
-void genPawnMoves(const Position& p, MoveList& move_list) {
+static void genPawnMoves(const Position& p, MoveList& move_list) {
 
 	Color c = p.sideToMove;
 	std::array<int, 2> push = { 8,-8 };
@@ -93,13 +93,14 @@ void genPawnMoves(const Position& p, MoveList& move_list) {
 		// Generate double pawn push moves
 		// Check that pawn is on starting rank
 		// Check that the two squares in front are not occupied
-		if (isInBB(RANK_2 | RANK_7, from) && !isInBB(occupied, from + push[c]) && !isInBB(occupied, from + 2 * push[c])) {
-			int to = from + 2 * push[c];
-			if (to < 64 && to >= 0) {
+		if ((c == WHITE && isInBB(RANK_2, from)) || (c == BLACK && isInBB(RANK_7, from))) {
+			if (!isInBB(occupied, from + push[c]) && !isInBB(occupied, from + 2 * push[c])) {
+				int to = from + 2 * push[c];
 				int flag = DOUBLE_PAWN_PUSH;
 				move_list.add(Move(from, to, flag));
-			}	
+			}
 		}
+		
 
 		// Generate possible capture moves
 		Bitboard targets = pawnAttacks[c][from] & ~our_side;

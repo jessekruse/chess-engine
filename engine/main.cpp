@@ -32,7 +32,7 @@ int main() {
 	cout << ml.get_count() << endl;
 
 	for (int i = 0; i < ml.count; ++i) {
-		if (ml.list[i].get_from() == squareIndex('a','7'))	ml.list[i].print_move();
+		if (ml.list[i].get_from() == squareIndex('a','7'))	ml.list[i].print_flag();
 	}
 
 	run_tests();
