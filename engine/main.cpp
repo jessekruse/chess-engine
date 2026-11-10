@@ -22,12 +22,16 @@ int main() {
 
 	MoveList ml;
 
-	cout << ml.count() << endl;
+	cout << ml.get_count() << endl;
 
 	ml.add(m);
 	ml.add(m);
 
-	cout << ml.count() << endl;
+	cout << ml.get_count() << endl;
+
+	ml.clear();
+
+	cout << ml.get_count() << endl;
 
 	ml.list[0].print_move();
 

@@ -75,5 +75,7 @@ static_assert(sizeof(Move) == 2);
 struct MoveList {
 	std::array<Move, 256> list{};
 	void add(Move m);
-	int count();
+	int get_count() const;
+	int count = 0;
+	void clear();
 };

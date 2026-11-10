@@ -19,31 +19,27 @@ void Move::print_flag() const {
 }
 
 void Move::print_move() const {
-	print_from();
-	print_to();
-	print_flag();
+	if (m == 0) {
+		std::cout << "Empty move" << std::endl;
+	}
+	else {
+		print_from();
+		print_to();
+		print_flag();
+	}
 }
 
 void MoveList::add(Move m) {
-
-	Move empty;
-
-	for (auto i = list.begin(); i != list.end(); ++i) {
-		if (*i != empty) continue;
-		if (*i == empty) {
-			*i = m;
-			break;
-		}
-	}
+	list[count] = m;
+	count++;
 }
 
-int MoveList::count() {
-	int count = 0;
-	Move empty;
-
-	for (auto i = list.begin(); i != list.end(); ++i) {
-		if (*i != empty) ++count;
-		if (*i == empty) break;
-	}
+int MoveList::get_count() const {
 	return count;
+}
+
+void MoveList::clear() {
+	Move empty;
+	list.fill(empty);
+	count = 0;
 }
