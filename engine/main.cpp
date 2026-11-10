@@ -17,9 +17,10 @@ int main() {
 
 	FEN fStart = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 	FEN fRookKingTest = "r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1";
+	FEN fPawnTest = "1n5k/P7/8/8/8/8/6K1/8 w - - 0 1";
 
 	Position p;
-	p.loadFEN(fStart);
+	p.loadFEN(fPawnTest);
 	MoveList ml;
 
 	p.print();
@@ -31,7 +32,7 @@ int main() {
 	cout << ml.get_count() << endl;
 
 	for (int i = 0; i < ml.count; ++i) {
-		if (ml.list[i].isCapture())	ml.list[i].print_move();
+		if (ml.list[i].get_from() == squareIndex('a','7'))	ml.list[i].print_move();
 	}
 
 	run_tests();

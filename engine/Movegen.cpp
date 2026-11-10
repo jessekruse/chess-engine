@@ -95,8 +95,10 @@ void genPawnMoves(const Position& p, MoveList& move_list) {
 		// Check that the two squares in front are not occupied
 		if (isInBB(RANK_2 | RANK_7, from) && !isInBB(occupied, from + push[c]) && !isInBB(occupied, from + 2 * push[c])) {
 			int to = from + 2 * push[c];
-			int flag = DOUBLE_PAWN_PUSH;
-			move_list.add(Move(from, to, flag));
+			if (to < 64 && to >= 0) {
+				int flag = DOUBLE_PAWN_PUSH;
+				move_list.add(Move(from, to, flag));
+			}	
 		}
 
 		// Generate possible capture moves
