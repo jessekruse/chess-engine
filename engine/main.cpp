@@ -8,32 +8,31 @@
 #include "Move.h"
 #include <format>
 #include "Attacks.h"
+#include "Movegen.h"
 
 using namespace std;
 
 int main() {
 	init_attack_tables();
 
-	move_t from = squareIndex('e', '2');
-	move_t to = squareIndex('e', '4');
-	move_t flag = DOUBLE_PAWN_PUSH;
+	FEN fStart = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
-	Move m(from, to, flag);
-
+	Position p;
+	fillSq(p.pieces[bKing],squareIndex('a','1'));
+	p.sideToMove = BLACK;
 	MoveList ml;
 
-	cout << ml.get_count() << endl;
-
-	ml.add(m);
-	ml.add(m);
+	p.print();
 
 	cout << ml.get_count() << endl;
 
-	ml.clear();
+	generateMoves(p, ml);
 
 	cout << ml.get_count() << endl;
 
-	ml.list[0].print_move();
+	for (int i = 0; i < ml.count; ++i) {
+		ml.list[i].print_move();
+	}
 
 	run_tests();
 }

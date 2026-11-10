@@ -20,7 +20,7 @@ inline constexpr std::string_view lookup = "PRNBQKprnbqk";
 
 enum Color { WHITE, BLACK };
 
-inline int opposite(Color c) { return c ^ 1; };
+inline Color opposite(Color c) { return (Color)(c ^ 1); };
 
 enum Piece {
 	wPawn,
