@@ -12,8 +12,7 @@ static constexpr Piece pieceType(Piece p, Color c) {
 
 static void genPieceMoves(Piece piece_type, const Position& p, MoveList& move_list) {
 	Color c = p.sideToMove;
-
-	Bitboard our_side = p.pieces[pieceColor(allWhite, opposite(c))];
+	Bitboard our_side = p.pieces[pieceColor(allWhite, c)];
 	Bitboard their_side = p.pieces[pieceColor(allWhite, opposite(c))];
 	Bitboard occupied = p.pieces[allPieces];
 	
