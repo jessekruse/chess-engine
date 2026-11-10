@@ -2,11 +2,19 @@
 #include <iostream>
 #include <array>
 
-static void genPieceMoves(int piece_type, const Position& p, MoveList& move_list) {
+static constexpr Piece pieceColor(Piece p, Color c) {
+	return Piece(int(p) + int(c));
+}
+
+static constexpr Piece pieceType(Piece p, Color c) {
+	return Piece(int(p) + 6 * int(c));
+}
+
+static void genPieceMoves(Piece piece_type, const Position& p, MoveList& move_list) {
 	Color c = p.sideToMove;
 
-	Bitboard our_side = p.pieces[allWhite + c];
-	Bitboard their_side = p.pieces[allBlack - c];
+	Bitboard our_side = p.pieces[pieceColor(allWhite, opposite(c))];
+	Bitboard their_side = p.pieces[pieceColor(allWhite, opposite(c))];
 	Bitboard occupied = p.pieces[allPieces];
 	
 	Bitboard piece = p.pieces[piece_type];
@@ -63,11 +71,11 @@ static void genPawnMoves(const Position& p, MoveList& move_list) {
 		QUEEN_PROMO_CAP
 	};
 
-	Bitboard our_side = p.pieces[allWhite + c];
-	Bitboard their_side = p.pieces[allBlack - c];
+	Bitboard our_side = p.pieces[pieceColor(allWhite, c)];
+	Bitboard their_side = p.pieces[pieceColor(allWhite, opposite(c))];
 	Bitboard occupied = p.pieces[allPieces];
 
-	Bitboard pawns = p.pieces[wPawn + c * 6];
+	Bitboard pawns = p.pieces[pieceType(wPawn,c)];
 	
 	while (pawns) {
 		int from = pop_lsb(pawns);
@@ -140,11 +148,11 @@ void generateMoves(const Position& p, MoveList& move_list) {
 	// Determine side to move
 	Color c = p.sideToMove;
 	
-	genPieceMoves(wKnight + c * 6, p, move_list);
-	genPieceMoves(wKing + c * 6, p, move_list);
-	genPieceMoves(wRook + c * 6, p, move_list);
-	genPieceMoves(wBishop + c * 6, p, move_list);
-	genPieceMoves(wQueen + c * 6, p, move_list);
+	genPieceMoves(pieceType(wKnight,c), p, move_list);
+	genPieceMoves(pieceType(wKing, c), p, move_list);
+	genPieceMoves(pieceType(wRook, c), p, move_list);
+	genPieceMoves(pieceType(wBishop, c), p, move_list);
+	genPieceMoves(pieceType(wQueen, c), p, move_list);
 	genPawnMoves(p, move_list);
 
 }
