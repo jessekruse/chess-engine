@@ -166,16 +166,79 @@ void run_tests() {
 	/////////////////////////
 	// Movegen.cpp Tests
 	/////////////////////////
+	MoveList ml;
+
+	// Start position checks
+	p.loadFEN(fStart);
+	generateMoves(p, ml);
+	assert(ml.count == 20);
+
+	p.sideToMove = BLACK;
+	ml.clear();
+	generateMoves(p, ml);
+	assert(ml.count == 20);
 
 	FEN fRookKingTest = "r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1";
 	
-	MoveList ml;
-
 	p.loadFEN(fRookKingTest);
 	ml.clear();
 	generateMoves(p, ml);
 	assert(ml.count == 24);
 
+	// Promotion checks
+	p.loadFEN("1n5k/P7/8/8/8/8/6K1/8 w - - 0 1");
+	ml.clear();
+	generateMoves(p, ml);
+	assert(ml.count == 16);
+
+	p.loadFEN("8/6k1/8/8/8/8/p7/1N5K b - - 0 1");
+	ml.clear();
+	generateMoves(p, ml);
+	assert(ml.count == 16);
+
+	p.loadFEN("8/PPPPPPPP/8/k7/8/8/8/K7 w - - 0 1");
+	ml.clear();
+	generateMoves(p, ml);
+	assert(ml.count == 35);
+
+	p.loadFEN("8/8/8/K7/8/k7/pppppppp/8 b - - 0 1");
+	ml.clear();
+	generateMoves(p, ml);
+	assert(ml.count == 35);
+
+	// En passant checks
+
+	p.loadFEN("4k3/8/8/3pP3/8/8/8/4K3 w - d6 0 1");
+	ml.clear();
+	generateMoves(p, ml);
+	assert(ml.count == 7);
+
+	p.loadFEN("4k3/8/8/8/3Pp3/8/8/4K3 b - d3 0 1");
+	ml.clear();
+	generateMoves(p, ml);
+	assert(ml.count == 7);
+
+	// Blocked push checks
+
+	p.loadFEN("4k3/8/8/8/8/4n3/4P3/4K3 w - - 0 1");
+	ml.clear();
+	generateMoves(p, ml);
+	assert(ml.count == 4);
+
+	p.loadFEN("4k3/8/8/8/4n3/8/4P3/4K3 w - - 0 1");
+	ml.clear();
+	generateMoves(p, ml);
+	assert(ml.count == 5);
+
+	p.loadFEN("4k3/4p3/4N3/8/8/8/8/4K3 b - - 0 1");
+	ml.clear();
+	generateMoves(p, ml);
+	assert(ml.count == 4);
+
+	p.loadFEN("4k3/4p3/8/4N3/8/8/8/4K3 b - - 0 1");
+	ml.clear();
+	generateMoves(p, ml);
+	assert(ml.count == 5);
 
 	std::cout << "All tests cleared" << std::endl;
 }
