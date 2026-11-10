@@ -1,6 +1,7 @@
 #include "Move.h"
 #include <iostream>
 #include "ChessFunctions.h"
+#include <cassert>
 
 
 void Move::print_from() const {
@@ -30,6 +31,7 @@ void Move::print_move() const {
 }
 
 void MoveList::add(Move m) {
+	assert(count < 256);
 	list[count] = m;
 	count++;
 }
@@ -39,7 +41,5 @@ int MoveList::get_count() const {
 }
 
 void MoveList::clear() {
-	Move empty;
-	list.fill(empty);
 	count = 0;
 }

@@ -145,6 +145,7 @@
     <ClCompile Include="ChessFunctions.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Move.cpp" />
+    <ClCompile Include="Movegen.cpp" />
     <ClCompile Include="Position.cpp" />
     <ClCompile Include="Tests.cpp" />
   </ItemGroup>
@@ -153,6 +154,7 @@
     <ClInclude Include="Bitboard.h" />
     <ClInclude Include="ChessFunctions.h" />
     <ClInclude Include="Move.h" />
+    <ClInclude Include="Movegen.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="Tests.h" />
   </ItemGroup>
