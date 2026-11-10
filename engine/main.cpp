@@ -16,10 +16,10 @@ int main() {
 	init_attack_tables();
 
 	FEN fStart = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+	FEN fRookKingTest = "r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1";
 
 	Position p;
-	fillSq(p.pieces[bKing],squareIndex('a','1'));
-	p.sideToMove = BLACK;
+	p.loadFEN(fStart);
 	MoveList ml;
 
 	p.print();
@@ -31,7 +31,7 @@ int main() {
 	cout << ml.get_count() << endl;
 
 	for (int i = 0; i < ml.count; ++i) {
-		ml.list[i].print_move();
+		if (ml.list[i].isCapture())	ml.list[i].print_move();
 	}
 
 	run_tests();

@@ -5,5 +5,6 @@
 #include "Position.h"
 #include "Move.h"
 #include "Attacks.h"
+#include "Movegen.h"
 
 void run_tests();

@@ -41,8 +41,13 @@ enum Piece {
 	PieceCount,
 };
 
-static_assert(wPawn == 0);
-static_assert(bPawn == 6);
+static_assert(bPawn == wPawn + 6);
+static_assert(bRook == wRook + 6);
+static_assert(bKnight == wKnight + 6);
+static_assert(bBishop == wBishop + 6);
+static_assert(bQueen == wQueen + 6);
+static_assert(bKing == wKing + 6);
+static_assert(allBlack == allWhite + 1);
 
 struct Position {
 	std::array<Bitboard, PieceCount> pieces{};

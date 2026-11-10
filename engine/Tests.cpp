@@ -163,7 +163,18 @@ void run_tests() {
 	assert(!isInBB(rookAttacks(sq, occupied), squareIndex('h', '4')));
 
 
+	/////////////////////////
+	// Movegen.cpp Tests
+	/////////////////////////
 
+	FEN fRookKingTest = "r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1";
+	
+	MoveList ml;
+
+	p.loadFEN(fRookKingTest);
+	ml.clear();
+	generateMoves(p, ml);
+	assert(ml.count == 24);
 
 
 	std::cout << "All tests cleared" << std::endl;
