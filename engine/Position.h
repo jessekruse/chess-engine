@@ -41,6 +41,9 @@ enum Piece {
 	PieceCount,
 };
 
+static_assert(wPawn == 0);
+static_assert(bPawn == 6);
+
 struct Position {
 	std::array<Bitboard, PieceCount> pieces{};
 	Color sideToMove = WHITE;
