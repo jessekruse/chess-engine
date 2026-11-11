@@ -158,6 +158,9 @@ struct cInfo {
 	std::array<move_t, 2> flags = { KING_CASTLE, QUEEN_CASTLE };
 };
 
+static constexpr cInfo CI;
+
+
 static void genCastlingMoves(const Position& p, MoveList& move_list) {
 	// Determine side to move
 	Color c = p.sideToMove;
@@ -167,8 +170,6 @@ static void genCastlingMoves(const Position& p, MoveList& move_list) {
 	Bitboard occupied = p.pieces[allPieces];
 
 	Bitboard king = p.pieces[pieceType(wKing, c)];
-
-	cInfo CI;
 
 	if (king) {
 		int from = pop_lsb(king);

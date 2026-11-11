@@ -3,12 +3,7 @@
 
 using namespace std;
 
-int squareIndex(char file, char rank) {
-	int f = file - 'a';
-	int r = rank - '1';
 
-	return f + r * 8;
-}
 
 string squareName(int sq) {
 	string sqName;
