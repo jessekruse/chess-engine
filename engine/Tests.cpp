@@ -183,7 +183,7 @@ void run_tests() {
 	p.loadFEN(fRookKingTest);
 	ml.clear();
 	generateMoves(p, ml);
-	assert(ml.count == 24);
+	assert(ml.count == 26);
 
 	// Promotion checks
 	p.loadFEN("1n5k/P7/8/8/8/8/6K1/8 w - - 0 1");

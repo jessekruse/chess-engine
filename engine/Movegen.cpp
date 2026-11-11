@@ -139,6 +139,56 @@ static void genPawnMoves(const Position& p, MoveList& move_list) {
 		}
 
 	}
+}
+
+static struct cInfo {
+	int g1 = squareIndex('g', '1');
+	int c1 = squareIndex('c', '1');
+	int g8 = squareIndex('g', '8');
+	int c8 = squareIndex('c', '8');
+
+	Bitboard KEmpty = 0x60;
+	Bitboard QEmpty = 0xE;
+	Bitboard kEmpty = 0x6000000000000000;
+	Bitboard qEmpty = 0xE00000000000000;
+
+	std::array<std::array<int, 2>, 2> to = { {{g1,c1},{g8,c8}} };
+	std::array<std::array<std::uint8_t, 2>, 2> rights = { {{K, Q}, {k, q}} };
+	std::array<std::array<Bitboard, 2>, 2> empties = { {{KEmpty, QEmpty}, {kEmpty, qEmpty}} };
+	std::array<move_t, 2> flags = { KING_CASTLE, QUEEN_CASTLE };
+};
+
+static void genCastlingMoves(const Position& p, MoveList& move_list) {
+	// Determine side to move
+	Color c = p.sideToMove;
+
+	std::uint8_t cRights = p.canCastle;
+
+	Bitboard occupied = p.pieces[allPieces];
+
+	Bitboard king = p.pieces[pieceType(wKing, c)];
+
+	cInfo CI;
+
+	while (king) {
+		int from = pop_lsb(king);
+
+		// Go through castling checks
+		for (int i = 0;i < 2; ++i) {
+
+			// Check if king can castle
+			if ((cRights & CI.rights[c][i]) != 0) {
+				
+				// Check if squares in between king and rook are empty
+				if ((occupied & CI.empties[c][i]) == 0) {
+					int to = CI.to[c][i];
+					int flag = CI.flags[i];
+					move_list.add(Move(from, to, flag));
+				}
+			}
+		}
+	}
+
 
 }
 
@@ -153,5 +203,6 @@ void generateMoves(const Position& p, MoveList& move_list) {
 	genPieceMoves(pieceType(wBishop, c), p, move_list);
 	genPieceMoves(pieceType(wQueen, c), p, move_list);
 	genPawnMoves(p, move_list);
+	genCastlingMoves(p, move_list);
 
 }
