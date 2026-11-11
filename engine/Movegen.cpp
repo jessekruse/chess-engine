@@ -141,7 +141,7 @@ static void genPawnMoves(const Position& p, MoveList& move_list) {
 	}
 }
 
-static struct cInfo {
+struct cInfo {
 	int g1 = squareIndex('g', '1');
 	int c1 = squareIndex('c', '1');
 	int g8 = squareIndex('g', '8');
@@ -170,7 +170,7 @@ static void genCastlingMoves(const Position& p, MoveList& move_list) {
 
 	cInfo CI;
 
-	while (king) {
+	if (king) {
 		int from = pop_lsb(king);
 
 		// Go through castling checks

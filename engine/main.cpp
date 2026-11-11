@@ -29,7 +29,5 @@ int main() {
 
 	cout << ml.count << endl;
 
-
-
 	run_tests();
 }

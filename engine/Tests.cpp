@@ -240,6 +240,48 @@ void run_tests() {
 	generateMoves(p, ml);
 	assert(ml.count == 5);
 
+	// Castling checks
+
+	p.loadFEN("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1");
+	ml.clear();
+	generateMoves(p, ml);
+	assert(ml.count == 26);
+
+	p.loadFEN("r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 1");
+	ml.clear();
+	generateMoves(p, ml);
+	assert(ml.count == 26);
+
+	p.loadFEN("r3k2r/8/8/8/8/8/8/R3K2R w - - 0 1");
+	ml.clear();
+	generateMoves(p, ml);
+	assert(ml.count == 24);
+
+	p.loadFEN("r3k2r/8/8/8/8/8/8/R3K2R w Kq - 0 1");
+	ml.clear();
+	generateMoves(p, ml);
+	assert(ml.count == 25);
+
+	p.loadFEN("r3k2r/8/8/8/8/8/8/R3K2R b Kq - 0 1");
+	ml.clear();
+	generateMoves(p, ml);
+	assert(ml.count == 25);
+
+	p.loadFEN("r3k2r/8/8/8/8/8/8/RN2K2R w KQkq - 0 1");
+	ml.clear();
+	generateMoves(p, ml);
+	assert(ml.count == 25);
+
+	p.loadFEN("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1");
+	ml.clear();
+	generateMoves(p, ml);
+	assert(ml.count == 48);
+
+	p.loadFEN("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R b KQkq - 0 1");
+	ml.clear();
+	generateMoves(p, ml);
+	assert(ml.count == 43);
+
 	std::cout << "All tests cleared" << std::endl;
 }
 
