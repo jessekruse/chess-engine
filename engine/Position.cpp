@@ -90,45 +90,10 @@ void Position::loadFEN(const FEN& f) {
 
 
 	// Set halfmove count
-	int ones_place = 0;
-	int tens_place = 0;
-	int hundreds_place = 0;
-	
-	if (fen_parts[4].length() == 3) {
-		hundreds_place = fen_parts[4][0] - '0';
-		tens_place = fen_parts[4][1] - '0';
-		ones_place = fen_parts[4][2] - '0';
-	}
-	if (fen_parts[4].length() == 2) {
-		tens_place = fen_parts[4][0] - '0';
-		ones_place = fen_parts[4][1] - '0';
-	}
-	if (fen_parts[4].length() == 1) {
-		ones_place = fen_parts[4][0] - '0';
-	}
-
-	halfmove = hundreds_place * 100 + tens_place * 10 + ones_place;
-
+	halfmove = std::stoi(fen_parts[4]);
 
 	// Set fullmove count
-	hundreds_place = 0;
-	tens_place = 0;
-	ones_place = 0;
-
-	if (fen_parts[5].length() == 3) {
-		hundreds_place = fen_parts[5][0] - '0';
-		tens_place = fen_parts[5][1] - '0';
-		ones_place = fen_parts[5][2] - '0';
-	}
-	if (fen_parts[5].length() == 2) {
-		tens_place = fen_parts[5][0] - '0';
-		ones_place = fen_parts[5][1] - '0';
-	}
-	if (fen_parts[5].length() == 1) {
-		ones_place = fen_parts[5][0] - '0';
-	}
-
-	fullmove = hundreds_place * 100 + tens_place * 10 + ones_place;
+	fullmove = std::stoi(fen_parts[5]);
 
 }
 
@@ -278,5 +243,41 @@ FEN Position::getFEN() const {
 	fen += std::to_string(fullmove);
 
 	return fen;
+
+}
+
+
+Piece Position::pieceOn(int sq) const {
+	// If square is empty return PieceCount as a flag
+	if (!isInBB(pieces[allPieces], sq)) return PieceCount; 
+
+	Color c = (isInBB(pieces[allWhite], sq)) ? WHITE : BLACK;
+
+	// Search through the piece bitboards for the color
+	for (int i = 0; i < 6;++i) {
+		if (isInBB(pieces[i + c * 6], sq)) return (Piece)(i + c * 6);
+	}
+}
+
+bool Position::makeMove(Move m) {
+
+	Bitboard fromBB = sqIndextoBB(m.get_from());
+	Bitboard toBB = sqIndextoBB(m.get_to());
+	Bitboard fromToBB = fromBB | toBB;
+	int flag = m.get_flag();
+
+	Piece fromPiece = pieceOn(m.get_from());
+
+	// Do quiet moves
+	if (flag == QUIET_MOVE) {
+		pieces[fromPiece] ^= fromToBB;
+		pieces[allPieces] ^= fromToBB;
+		pieces[allWhite] ^= fromToBB;
+		pieces[allBlack] ^= fromToBB;
+
+		return true;
+	}
+
+	sideToMove = (sideToMove == WHITE) ? BLACK : WHITE;
 
 }

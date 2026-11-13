@@ -8,6 +8,7 @@
 #include <sstream>
 #include <vector>
 #include <string_view>
+#include "Move.h"
 
 using FEN = std::string;
 
@@ -59,6 +60,8 @@ struct Position {
 	void loadFEN(const FEN& f);
 	void print() const;
 	FEN getFEN() const;
+	bool makeMove(Move m);
+	Piece pieceOn(int sq) const;
 };
 
 static_assert(sizeof(Position) <= 160);
