@@ -293,6 +293,31 @@ void run_tests() {
 	generateMoves(p, ml);
 	assert(ml.count == 43);
 
+	////////////////////////////////
+	// makeMove tests
+	////////////////////////////////
+
+	from = squareIndex('g', '1');
+	to = squareIndex('f', '3');
+	flag = QUIET_MOVE;
+	
+	Move m(from, to, flag);
+
+	p.loadFEN(fStart);
+	p.makeMove(m);
+	assert(p.getFEN() == "rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R b KQkq - 1 1");
+	assert((p.pieces[allWhite] & p.pieces[allBlack]) == 0);
+	assert(p.pieces[allPieces] == (p.pieces[allWhite] | p.pieces[allBlack]));
+
+	FEN fEPTest = "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1";
+	p.loadFEN(fEPTest);
+	
+	m.update("g8", "f6", QUIET_MOVE);
+	p.makeMove(m);
+	assert(p.getFEN() == "rnbqkb1r/pppppppp/5n2/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 1 2");
+	assert((p.pieces[allWhite] & p.pieces[allBlack]) == 0);
+	assert(p.pieces[allPieces] == (p.pieces[allWhite] | p.pieces[allBlack]));
+
 	std::cout << "All tests cleared" << std::endl;
 }
 

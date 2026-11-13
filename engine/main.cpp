@@ -23,24 +23,6 @@ int main() {
 
 	Position p;
 	p.loadFEN(fStart);
-	
-	move_t from = squareIndex('g', '1');
-	move_t to = squareIndex('f', '3');
-	move_t flag = QUIET_MOVE;
-
-	Move m(from, to, flag);
-
-	p.print();
-	cout << p.getFEN() << endl;
-
-	p.makeMove(m);
-
-	p.print();
-	cout << p.getFEN() << endl;
-
-	cout << (p.pieces[allWhite] & p.pieces[allBlack]) << endl;
-	cout << (p.pieces[allPieces] == (p.pieces[allWhite] | p.pieces[allBlack])) << endl;
-	
 
 	run_tests();
 }

@@ -1,5 +1,6 @@
 #include "Position.h"
 #include <iostream>
+#include <cassert>
 
 // Loads a FEN string into the pieces Bitboards
 void Position::loadFEN(const FEN& f) {
@@ -268,16 +269,19 @@ bool Position::makeMove(Move m) {
 	Bitboard fromToBB = sqIndextoBB(from) | sqIndextoBB(to);
 
 	Piece fromPiece = pieceOn(m.get_from());
+	assert(fromPiece != PieceCount);
 
 	// Do quiet moves
 	if (flag == QUIET_MOVE) {
 		pieces[fromPiece] ^= fromToBB;
 		pieces[allWhite + sideToMove] ^= fromToBB;
-		enPassant = 0;
 	}
 
 	// Update allPieces bitboard
 	pieces[allPieces] = pieces[allWhite] | pieces[allBlack];
+
+	// Reset en passant
+	if (flag != DOUBLE_PAWN_PUSH) enPassant = 0;
 
 	// Check if half move count resets
 	if (fromPiece == wPawn || fromPiece == bPawn || m.isCapture()) {

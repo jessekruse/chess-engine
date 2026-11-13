@@ -30,6 +30,13 @@ void Move::print_move() const {
 	}
 }
 
+void Move::update(std::string from, std::string to, move_t flag) {
+	move_t f = squareIndex(from[0], from[1]);
+	move_t t = squareIndex(to[0], to[1]);
+
+	m = (f | (t << 6) | (flag << 12));
+}
+
 void MoveList::add(Move m) {
 	assert(count < 256);
 	list[count] = m;
@@ -43,3 +50,4 @@ int MoveList::get_count() const {
 void MoveList::clear() {
 	count = 0;
 }
+
