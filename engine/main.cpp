@@ -31,10 +31,15 @@ int main() {
 	Move m(from, to, flag);
 
 	p.print();
+	cout << p.getFEN() << endl;
 
 	p.makeMove(m);
 
 	p.print();
+	cout << p.getFEN() << endl;
+
+	cout << (p.pieces[allWhite] & p.pieces[allBlack]) << endl;
+	cout << (p.pieces[allPieces] == (p.pieces[allWhite] | p.pieces[allBlack])) << endl;
 	
 
 	run_tests();

@@ -261,23 +261,30 @@ Piece Position::pieceOn(int sq) const {
 
 bool Position::makeMove(Move m) {
 
-	Bitboard fromBB = sqIndextoBB(m.get_from());
-	Bitboard toBB = sqIndextoBB(m.get_to());
-	Bitboard fromToBB = fromBB | toBB;
+	int from = m.get_from();
+	int to = m.get_to();
 	int flag = m.get_flag();
+
+	Bitboard fromToBB = sqIndextoBB(from) | sqIndextoBB(to);
 
 	Piece fromPiece = pieceOn(m.get_from());
 
 	// Do quiet moves
 	if (flag == QUIET_MOVE) {
 		pieces[fromPiece] ^= fromToBB;
-		pieces[allPieces] ^= fromToBB;
-		pieces[allWhite] ^= fromToBB;
-		pieces[allBlack] ^= fromToBB;
-
-		return true;
+		pieces[allWhite + sideToMove] ^= fromToBB;
 	}
+
+	// Check if half move count resets
+	if (fromPiece == wPawn || fromPiece == bPawn || m.isCapture()) {
+		halfmove = 0;
+	}
+	else halfmove++;
+
+
+	pieces[allPieces] = pieces[allWhite] | pieces[allBlack];
 
 	sideToMove = (sideToMove == WHITE) ? BLACK : WHITE;
 
+	return true;
 }
