@@ -56,6 +56,7 @@ void run_tests() {
 	FEN fStart = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 	FEN fEnPassant = "rnbqkbnr/ppp1p1pp/8/3pPp2/8/8/PPPP1PPP/RNBQKBNR b KQkq f6 0 3";
 	FEN fEndGame = "8/4k3/8/4P3/4K3/8/8/8 w - - 0 1";
+	FEN fFullMove = "r4rk1/1pp1qppp/p1np1n2/2b1p1B1/2B1P1b1/P1NP1N2/1PP1QPPP/R4RK1 w - - 0 10";
 
 	Position p;
 	p.loadFEN(fStart);
@@ -80,9 +81,14 @@ void run_tests() {
 	p.loadFEN(fEndGame);
 	assert(p.sideToMove == WHITE);
 	assert(p.canCastle == 0);
-	std::cout << fEndGame << std::endl;
-	std::cout << p.getFEN() << std::endl;
 	assert(p.getFEN() == fEndGame);
+
+	p.loadFEN(fFullMove);
+	assert(p.sideToMove == WHITE);
+	assert(p.canCastle == 0);
+	assert(p.halfmove == 0);
+	assert(p.fullmove == 10);
+	assert(p.getFEN() == fFullMove);
 
 	
 	/////////////////////////////

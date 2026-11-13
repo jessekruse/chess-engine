@@ -180,11 +180,9 @@ void Position::print() const {
 
 	// Print full move count
 	std::cout << "Full Move: " << fullmove << std::endl;
-
-
-
-
 }
+
+
 
 FEN Position::getFEN() const {
 
@@ -273,11 +271,11 @@ FEN Position::getFEN() const {
 
 	// Add half move count to FEN
 	fen.push_back(' ');
-	fen.push_back('0' + halfmove);
+	fen += std::to_string(halfmove);
 
 	// Add full move count to FEN;
 	fen.push_back(' ');
-	fen.push_back('0' + fullmove);
+	fen += std::to_string(fullmove);
 
 	return fen;
 

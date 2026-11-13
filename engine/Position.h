@@ -60,3 +60,5 @@ struct Position {
 	void print() const;
 	FEN getFEN() const;
 };
+
+static_assert(sizeof(Position) <= 160);
