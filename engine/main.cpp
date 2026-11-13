@@ -20,14 +20,16 @@ int main() {
 	FEN fCastle = "r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 1";
 
 	Position p;
-	p.loadFEN(fCastle);
+	p.loadFEN(fKiwipete);
 	MoveList ml;
 
 	generateMoves(p, ml);
 
-	p.print();
-
 	cout << ml.count << endl;
+
+	cout << sizeof(Position) << endl;
+
+	cout << p.getFEN() << endl;
 
 	run_tests();
 }

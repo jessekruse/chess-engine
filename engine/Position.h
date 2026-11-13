@@ -58,5 +58,5 @@ struct Position {
 	int fullmove = 1;
 	void loadFEN(const FEN& f);
 	void print() const;
-	void printFEN() const;
+	FEN getFEN() const;
 };

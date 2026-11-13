@@ -189,8 +189,6 @@ static void genCastlingMoves(const Position& p, MoveList& move_list) {
 			}
 		}
 	}
-
-
 }
 
 void generateMoves(const Position& p, MoveList& move_list) {

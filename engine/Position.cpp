@@ -186,5 +186,99 @@ void Position::print() const {
 
 }
 
-void Position::printFEN() const {
+FEN Position::getFEN() const {
+
+	// Generate character array for pieces
+	int piece = 0;
+	std::array<char, 64> board{};
+	board.fill(' ');
+
+	for (auto p = lookup.begin(); p != lookup.end(); ++p) {
+		piece = lookup.find(*p);
+
+		for (int i = 0; i < 64; i++) {
+			if (isInBB(pieces[piece], i)) {
+				board[i] = *p;
+			}
+		}
+	}
+
+	std::string fen{};
+
+	// Create piece field of FEN
+	int count = 0;
+
+	for (int r = 7; r >= 0; --r) {
+		for (int f = 0; f <= 8;++f) {
+
+			// Check if end of the rank
+			if (f == 8) {
+				// Check if there were empty squares before end of rank
+				if (count != 0) {
+					fen.push_back('0' + count);
+					count = 0;
+				}
+				// Make sure it isn't the last rank
+				if (r > 0) fen.push_back('/');
+				continue;
+			}
+
+			int sq = r * 8 + f;
+
+			// Check if board square is empty and increment count
+			if (board[sq] == ' ') {
+				count++;
+			}
+
+			// Check piece on square
+			if (board[sq] != ' ') {
+				if (count !=0) fen.push_back('0' + count);
+				count = 0;
+				fen.push_back(board[sq]);
+			}
+		}
+	}
+
+	// Add side to move to FEN
+	fen.push_back(' ');
+	if (sideToMove == Color::WHITE) {
+		fen.push_back('w');
+	}
+	else fen.push_back('b');
+
+
+	// Add castling rights to FEN
+	fen.push_back(' ');
+	std::array<int, 4> cChecks = { K, Q, k, q };
+	std::array<char, 4> cChars = { 'K','Q','k','q' };
+
+	for (int i = 0; i < 4; ++i) {
+		if ((canCastle & cChecks[i]) != 0) {
+			fen.push_back(cChars[i]);
+		}
+	}
+	if (canCastle == 0) fen.push_back('-');
+
+	// Add en passant to FEN
+	fen.push_back(' ');
+
+	if (enPassant) {
+		int sq = lsb(enPassant);
+		fen.push_back('a' + sq % 8);
+		fen.push_back('1' + sq / 8);
+	}
+	else {
+		fen.push_back('-');
+	}
+
+	// Add half move count to FEN
+	fen.push_back(' ');
+	fen.push_back('0' + halfmove);
+
+	// Add full move count to FEN;
+	fen.push_back(' ');
+	fen.push_back('0' + fullmove);
+
+	return fen;
+
 }

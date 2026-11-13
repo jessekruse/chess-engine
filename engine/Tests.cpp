@@ -68,16 +68,21 @@ void run_tests() {
 	assert(popcount(p.pieces[allWhite]) == 16);
 	assert(popcount(p.pieces[allBlack]) == 16);
 	assert(popcount(p.pieces[allPieces]) == 32);
+	assert(p.getFEN() == fStart);
 
 	p.loadFEN(fEnPassant);
 	assert(p.sideToMove == BLACK);
 	assert(p.enPassant == sqIndextoBB(squareIndex('f', '6')));
 	assert(p.pieces[allPieces] == (p.pieces[allWhite] | p.pieces[allBlack]));
 	assert((p.pieces[allWhite] & p.pieces[allBlack]) == 0);
+	assert(p.getFEN() == fEnPassant);
 
 	p.loadFEN(fEndGame);
 	assert(p.sideToMove == WHITE);
 	assert(p.canCastle == 0);
+	std::cout << fEndGame << std::endl;
+	std::cout << p.getFEN() << std::endl;
+	assert(p.getFEN() == fEndGame);
 
 	
 	/////////////////////////////
