@@ -248,15 +248,15 @@ FEN Position::getFEN() const {
 
 
 Piece Position::pieceOn(int sq) const {
-	// If square is empty return PieceCount as a flag
-	if (!isInBB(pieces[allPieces], sq)) return PieceCount; 
-
 	Color c = (isInBB(pieces[allWhite], sq)) ? WHITE : BLACK;
 
 	// Search through the piece bitboards for the color
 	for (int i = 0; i < 6;++i) {
 		if (isInBB(pieces[i + c * 6], sq)) return (Piece)(i + c * 6);
 	}
+
+	// If square is empty return PieceCount as a flag
+	return PieceCount;
 }
 
 bool Position::makeMove(Move m) {
@@ -273,7 +273,11 @@ bool Position::makeMove(Move m) {
 	if (flag == QUIET_MOVE) {
 		pieces[fromPiece] ^= fromToBB;
 		pieces[allWhite + sideToMove] ^= fromToBB;
+		enPassant = 0;
 	}
+
+	// Update allPieces bitboard
+	pieces[allPieces] = pieces[allWhite] | pieces[allBlack];
 
 	// Check if half move count resets
 	if (fromPiece == wPawn || fromPiece == bPawn || m.isCapture()) {
@@ -281,9 +285,10 @@ bool Position::makeMove(Move m) {
 	}
 	else halfmove++;
 
+	// If black moves then full move increments
+	if (sideToMove == BLACK) fullmove++;
 
-	pieces[allPieces] = pieces[allWhite] | pieces[allBlack];
-
+	// Switch side to move
 	sideToMove = (sideToMove == WHITE) ? BLACK : WHITE;
 
 	return true;
