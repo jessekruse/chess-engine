@@ -321,12 +321,14 @@ void run_tests() {
 	p.loadFEN("rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 2");
 	m.update("e4", "d5", CAPTURE);
 	p.makeMove(m);
+	assert(p.getFEN() == "rnbqkbnr/ppp1pppp/8/3P4/8/8/PPPP1PPP/RNBQKBNR b KQkq - 0 2");
 	assert((p.pieces[allWhite] & p.pieces[allBlack]) == 0);
 	assert(p.pieces[allPieces] == (p.pieces[allWhite] | p.pieces[allBlack]));
 
 	p.loadFEN("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 5 1");
 	m.update("e5", "f7", CAPTURE);
 	p.makeMove(m);
+	assert(p.getFEN() == "r3k2r/p1ppqNb1/bn2pnp1/3P4/1p2P3/2N2Q1p/PPPBBPPP/R3K2R b KQkq - 0 1");
 	assert((p.pieces[allWhite] & p.pieces[allBlack]) == 0);
 	assert(p.pieces[allPieces] == (p.pieces[allWhite] | p.pieces[allBlack]));
 

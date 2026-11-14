@@ -273,25 +273,21 @@ bool Position::makeMove(Move m) {
 	Piece fromPiece = pieceOn(from);
 	assert(fromPiece != PieceCount);
 
-	// Do quiet moves
-	if (flag == QUIET_MOVE) {
-		pieces[fromPiece] ^= fromToBB;
-		pieces[allWhite + sideToMove] ^= fromToBB;
-	}
-
 	// Do capture moves
 	if (flag == CAPTURE) {
 		Piece toPiece = pieceOn(to);
-
-		// Update from piece
-		pieces[fromPiece] ^= fromToBB;			
-		pieces[allWhite + sideToMove] ^= fromToBB;
+		assert(toPiece != PieceCount);
+		assert(toPiece != fromPiece);
 
 		// Remove to piece
 		pieces[toPiece] ^= toBB;
 		pieces[allWhite + opposite(sideToMove)] ^= toBB;
 
 	}
+
+	// Update from piece
+	pieces[fromPiece] ^= fromToBB;
+	pieces[allWhite + sideToMove] ^= fromToBB;
 
 	// Update allPieces bitboard
 	pieces[allPieces] = pieces[allWhite] | pieces[allBlack];

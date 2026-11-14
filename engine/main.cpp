@@ -30,13 +30,9 @@ int main() {
 
 	m.update("e5", "f7", CAPTURE);
 
-	p.print();
-	cout << p.getFEN() << endl;
-
 	p.makeMove(m);
 
-	p.print();
-	cout << p.getFEN() << endl;
+
 
 	run_tests();
 }
