@@ -265,6 +265,11 @@ Color colorOf(Piece p) {
 	return (p < 6) ? WHITE : BLACK;
 }
 
+// Lookup for promotion piece
+static constexpr std::array<Piece, 8> promoPiece = {
+	wKnight, wBishop, wRook, wQueen,
+	bKnight, bBishop, bRook, bQueen };
+
 bool Position::makeMove(Move m) {
 
 	int from = m.get_from();	// Get from square
@@ -303,13 +308,7 @@ bool Position::makeMove(Move m) {
 	// Move the piece
 	pieces[fromPiece] ^= fromToBB;
 	pieces[allWhite + sideToMove] ^= fromToBB;
-
-
-	// Lookup for promotion piece
-	std::array<Piece, 8> promoPiece = { 
-		wKnight, wBishop, wRook, wQueen, 
-		bKnight, bBishop, bRook, bQueen };
-
+	
 	// Check for promotion
 	if (m.isPromotion()) {
 		// Remove pawn
