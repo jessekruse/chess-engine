@@ -24,19 +24,19 @@ int main() {
 	m.update("e4", "d5", CAPTURE);
 
 	Position p;
-	p.loadFEN(fStart);
+	p.loadFEN("rnbqkbnr/ppp1p1pp/8/3pPp2/8/8/PPPP1PPP/RNBQKBNR w KQkq f6 0 3");
 	cout << p.getFEN() << endl;
-
-	m.update("e2", "e4", DOUBLE_PAWN_PUSH);
-
+	m.update("e5", "f6", EP_CAPTURE);
 	p.makeMove(m);
 
 	cout << p.getFEN() << endl;
 
-	m.update("e7", "e5", DOUBLE_PAWN_PUSH);
-	p.makeMove(m);
-
+	p.loadFEN("rnbqkbnr/pppp1ppp/8/8/3PpP2/8/PPP1P1PP/RNBQKBNR b KQkq f3 0 3");
 	cout << p.getFEN() << endl;
+	m.update("e4", "f3", EP_CAPTURE);
+	p.makeMove(m);
+	cout << p.getFEN() << endl;
+
 
 
 

@@ -262,14 +262,7 @@ Piece Position::pieceOn(int sq) const {
 
 Color colorOf(Piece p) {
 	assert(p >= 0 && p < 12);
-	for (int i = 0;i < 6;++i) {
-		if (p == i) {
-			return WHITE;
-		}
-		if (p == i + 6) {
-			return BLACK;
-		}
-	}
+	return (p < 6) ? WHITE : BLACK;
 }
 
 bool Position::makeMove(Move m) {
@@ -294,9 +287,18 @@ bool Position::makeMove(Move m) {
 		// Remove to piece
 		pieces[toPiece] ^= toBB;
 		pieces[allWhite + opposite(sideToMove)] ^= toBB;
-
 	}
 
+	// Do en passant capture
+	if (flag == EP_CAPTURE) {
+		to = (colorOf(fromPiece) == WHITE) ? to - 8 : to + 8;
+		toBB = sqIndextoBB(to);
+		Piece toPiece = pieceOn(to);
+
+		// Remove to piece
+		pieces[toPiece] ^= toBB;
+		pieces[allWhite + opposite(sideToMove)] ^= toBB;
+	}
 
 	// Update from piece
 	pieces[fromPiece] ^= fromToBB;
@@ -307,7 +309,7 @@ bool Position::makeMove(Move m) {
 
 	// Set or reset en passant
 	if (flag == DOUBLE_PAWN_PUSH) {
-		enPassant = colorOf(fromPiece) ? sN(toBB) : sS(toBB);
+		enPassant = (colorOf(fromPiece) == BLACK) ? sN(toBB) : sS(toBB);
 	}
 	else enPassant = 0;
 	
