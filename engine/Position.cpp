@@ -292,16 +292,16 @@ bool Position::makeMove(Move m) {
 			captureSq = (colorOf(fromPiece) == WHITE) ? to - 8 : to + 8;
 		}
 
-		toBB = sqIndextoBB(captureSq);
+		Bitboard captureBB = sqIndextoBB(captureSq);
 
 		// Get the captured piece type
-		Piece toPiece = pieceOn(captureSq);
-		assert(toPiece != PieceCount);
-		assert(colorOf(toPiece) != colorOf(fromPiece));
+		Piece capturePiece = pieceOn(captureSq);
+		assert(capturePiece != PieceCount);
+		assert(colorOf(capturePiece) != colorOf(fromPiece));
 
 		// Remove captured piece
-		pieces[toPiece] ^= toBB;
-		pieces[allWhite + opposite(sideToMove)] ^= toBB;
+		pieces[capturePiece] ^= captureBB;
+		pieces[allWhite + opposite(sideToMove)] ^= captureBB;
 	}
 
 

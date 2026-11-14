@@ -1,5 +1,17 @@
 #include "Tests.h"
 
+
+void makeMoveTest(FEN fStart, std::string from, std::string to, move_t flag, FEN fEnd) {
+	Position p;
+	p.loadFEN(fStart);
+	Move m;
+	m.update(from, to, flag);
+	p.makeMove(m);
+	assert(p.getFEN() == fEnd);
+	assert((p.pieces[allWhite] & p.pieces[allBlack]) == 0);
+	assert(p.pieces[allPieces] == (p.pieces[allWhite] | p.pieces[allBlack]));
+}
+
 void run_tests() {
 
 	//////////////////////////
@@ -297,41 +309,55 @@ void run_tests() {
 	// makeMove tests
 	////////////////////////////////
 
-	from = squareIndex('g', '1');
-	to = squareIndex('f', '3');
-	flag = QUIET_MOVE;
-	
-	Move m(from, to, flag);
-
-	p.loadFEN(fStart);
-	p.makeMove(m);
-	assert(p.getFEN() == "rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R b KQkq - 1 1");
-	assert((p.pieces[allWhite] & p.pieces[allBlack]) == 0);
-	assert(p.pieces[allPieces] == (p.pieces[allWhite] | p.pieces[allBlack]));
-
-	FEN fEPTest = "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1";
-	p.loadFEN(fEPTest);
-	
-	m.update("g8", "f6", QUIET_MOVE);
-	p.makeMove(m);
-	assert(p.getFEN() == "rnbqkb1r/pppppppp/5n2/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 1 2");
-	assert((p.pieces[allWhite] & p.pieces[allBlack]) == 0);
-	assert(p.pieces[allPieces] == (p.pieces[allWhite] | p.pieces[allBlack]));
-
-	p.loadFEN("rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 2");
-	m.update("e4", "d5", CAPTURE);
-	p.makeMove(m);
-	assert(p.getFEN() == "rnbqkbnr/ppp1pppp/8/3P4/8/8/PPPP1PPP/RNBQKBNR b KQkq - 0 2");
-	assert((p.pieces[allWhite] & p.pieces[allBlack]) == 0);
-	assert(p.pieces[allPieces] == (p.pieces[allWhite] | p.pieces[allBlack]));
-
-	p.loadFEN("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 5 1");
-	m.update("e5", "f7", CAPTURE);
-	p.makeMove(m);
-	assert(p.getFEN() == "r3k2r/p1ppqNb1/bn2pnp1/3P4/1p2P3/2N2Q1p/PPPBBPPP/R3K2R b KQkq - 0 1");
-	assert((p.pieces[allWhite] & p.pieces[allBlack]) == 0);
-	assert(p.pieces[allPieces] == (p.pieces[allWhite] | p.pieces[allBlack]));
-
+	makeMoveTest(fStart, "g1", "f3", QUIET_MOVE, "rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R b KQkq - 1 1");
+	makeMoveTest("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1",
+		"g8", "f6", QUIET_MOVE,
+		"rnbqkb1r/pppppppp/5n2/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 1 2");
+	makeMoveTest("rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 2",
+		"e4", "d5", CAPTURE,
+		"rnbqkbnr/ppp1pppp/8/3P4/8/8/PPPP1PPP/RNBQKBNR b KQkq - 0 2");
+	makeMoveTest("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 5 1",
+		"e5", "f7", CAPTURE,
+		"r3k2r/p1ppqNb1/bn2pnp1/3P4/1p2P3/2N2Q1p/PPPBBPPP/R3K2R b KQkq - 0 1");
+	makeMoveTest("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+		"e2", "e4", DOUBLE_PAWN_PUSH,
+		"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
+	makeMoveTest("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1",
+		"e7", "e5", DOUBLE_PAWN_PUSH,
+		"rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 2");
+	makeMoveTest("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1",
+		"g8", "f6", QUIET_MOVE,
+		"rnbqkb1r/pppppppp/5n2/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 1 2");
+	makeMoveTest("rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 2",
+		"e4", "d5", CAPTURE,
+		"rnbqkbnr/ppp1pppp/8/3P4/8/8/PPPP1PPP/RNBQKBNR b KQkq - 0 2");
+	makeMoveTest("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 5 1",
+		"e5", "f7", CAPTURE,
+		"r3k2r/p1ppqNb1/bn2pnp1/3P4/1p2P3/2N2Q1p/PPPBBPPP/R3K2R b KQkq - 0 1");
+	makeMoveTest("rnbqkbnr/ppp1pppp/8/3p4/4P3/2N5/PPPP1PPP/R1BQKBNR b KQkq - 1 2",
+		"d5", "e4", CAPTURE,
+		"rnbqkbnr/ppp1pppp/8/8/4p3/2N5/PPPP1PPP/R1BQKBNR w KQkq - 0 3");
+	makeMoveTest("rnbqkbnr/ppp1p1pp/8/3pPp2/8/8/PPPP1PPP/RNBQKBNR w KQkq f6 0 3",
+		"e5", "f6", EP_CAPTURE,
+		"rnbqkbnr/ppp1p1pp/5P2/3p4/8/8/PPPP1PPP/RNBQKBNR b KQkq - 0 3");
+	makeMoveTest("rnbqkbnr/pppp1ppp/8/8/3PpP2/8/PPP1P1PP/RNBQKBNR b KQkq f3 0 3",
+		"e4", "f3", EP_CAPTURE,
+		"rnbqkbnr/pppp1ppp/8/8/3P4/5p2/PPP1P1PP/RNBQKBNR w KQkq - 0 4");
+	makeMoveTest("8/P7/8/8/8/8/8/k6K w - - 0 1",
+		"a7", "a8", QUEEN_PROMO,
+		"Q7/8/8/8/8/8/8/k6K b - - 0 1");
+	makeMoveTest("8/1P6/8/8/8/8/8/k6K w - - 0 1",
+		"b7", "b8", BISHOP_PROMO,
+		"1B6/8/8/8/8/8/8/k6K b - - 0 1");
+	makeMoveTest("k7/8/8/8/8/8/p7/7K b - - 4 30",
+		"a2", "a1", QUEEN_PROMO,
+		"k7/8/8/8/8/8/8/q6K w - - 0 31");
+	makeMoveTest("k7/8/8/8/8/8/1p6/R6K b - - 3 40",
+		"b2", "a1", KNIGHT_PROMO_CAP,
+		"k7/8/8/8/8/8/8/n6K w - - 0 41");
+	makeMoveTest("r3k3/1P6/8/8/8/8/8/4K3 w - - 0 1",
+		"b7", "a8", ROOK_PROMO_CAP,
+		"R3k3/8/8/8/8/8/8/4K3 b - - 0 1");
 
 	std::cout << "All tests cleared" << std::endl;
 }
