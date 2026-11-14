@@ -287,6 +287,8 @@ bool Position::makeMove(Move m) {
 			captureSq = (colorOf(fromPiece) == WHITE) ? to - 8 : to + 8;
 		}
 
+		toBB = sqIndextoBB(captureSq);
+
 		// Get the captured piece type
 		Piece toPiece = pieceOn(captureSq);
 		assert(toPiece != PieceCount);
@@ -298,7 +300,7 @@ bool Position::makeMove(Move m) {
 	}
 
 
-	// Update the moved piece
+	// Move the piece
 	pieces[fromPiece] ^= fromToBB;
 	pieces[allWhite + sideToMove] ^= fromToBB;
 
