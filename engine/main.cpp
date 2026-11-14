@@ -24,20 +24,28 @@ int main() {
 	m.update("e4", "d5", CAPTURE);
 
 	Position p;
-	p.loadFEN("rnbqkbnr/ppp1p1pp/8/3pPp2/8/8/PPPP1PPP/RNBQKBNR w KQkq f6 0 3");
-	cout << p.getFEN() << endl;
-	m.update("e5", "f6", EP_CAPTURE);
-	p.makeMove(m);
+	p.loadFEN("8/P7/8/8/8/8/8/k6K w - - 0 1");
 
 	cout << p.getFEN() << endl;
-
-	p.loadFEN("rnbqkbnr/pppp1ppp/8/8/3PpP2/8/PPP1P1PP/RNBQKBNR b KQkq f3 0 3");
-	cout << p.getFEN() << endl;
-	m.update("e4", "f3", EP_CAPTURE);
+	m.update("a7", "a8", ROOK_PROMO);
 	p.makeMove(m);
 	cout << p.getFEN() << endl;
 
+	cout << endl;
 
+	p.loadFEN("k7/8/8/8/8/8/1p6/R6K b - - 3 40");
+	cout << p.getFEN() << endl;
+	m.update("b2", "a1", BISHOP_PROMO_CAP);
+	p.makeMove(m);
+	cout << p.getFEN() << endl;
+
+	cout << endl;
+
+	p.loadFEN("r3k3/1P6/8/8/8/8/8/4K3 w - - 0 1");
+	cout << p.getFEN() << endl;
+	m.update("b7", "a8", QUEEN_PROMO_CAP);
+	p.makeMove(m);
+	cout << p.getFEN() << endl;
 
 
 	run_tests();

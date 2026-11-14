@@ -267,49 +267,66 @@ Color colorOf(Piece p) {
 
 bool Position::makeMove(Move m) {
 
-	int from = m.get_from();
-	int to = m.get_to();
-	int flag = m.get_flag();
+	int from = m.get_from();	// Get from square
+	int to = m.get_to();		// Get to square
+	int flag = m.get_flag();	// Get the move flag
 
-	Bitboard fromBB = sqIndextoBB(from);
-	Bitboard toBB = sqIndextoBB(to);
-	Bitboard fromToBB = fromBB | toBB;
+	Bitboard fromBB = sqIndextoBB(from);	// Create a bitboard for the from square
+	Bitboard toBB = sqIndextoBB(to);		// Create a bitboard for the to square
+	Bitboard fromToBB = fromBB | toBB;		// Create a bitboard with both from and to squares
 
-	Piece fromPiece = pieceOn(from);
-	assert(fromPiece != PieceCount);
+	Piece fromPiece = pieceOn(from);	// Get the piecetype that is moving
+	assert(fromPiece != PieceCount);	// Make sure we actually have a piece
 
-	// Do capture moves
-	if (flag == CAPTURE) {
-		Piece toPiece = pieceOn(to);
+	// If move is a capture, remove captured piece
+	if (m.isCapture()) {
+		int captureSq = to;
+
+		// Check for en passant to update the capture square
+		if (flag == EP_CAPTURE) {
+			captureSq = (colorOf(fromPiece) == WHITE) ? to - 8 : to + 8;
+		}
+
+		// Get the captured piece type
+		Piece toPiece = pieceOn(captureSq);
 		assert(toPiece != PieceCount);
 		assert(colorOf(toPiece) != colorOf(fromPiece));
 
-		// Remove to piece
+		// Remove captured piece
 		pieces[toPiece] ^= toBB;
 		pieces[allWhite + opposite(sideToMove)] ^= toBB;
 	}
 
-	// Do en passant capture
-	if (flag == EP_CAPTURE) {
-		to = (colorOf(fromPiece) == WHITE) ? to - 8 : to + 8;
-		toBB = sqIndextoBB(to);
-		Piece toPiece = pieceOn(to);
 
-		// Remove to piece
-		pieces[toPiece] ^= toBB;
-		pieces[allWhite + opposite(sideToMove)] ^= toBB;
-	}
-
-	// Update from piece
+	// Update the moved piece
 	pieces[fromPiece] ^= fromToBB;
 	pieces[allWhite + sideToMove] ^= fromToBB;
+
+
+	// Lookup for promotion piece
+	std::array<Piece, 8> promoPiece = { 
+		wKnight, wBishop, wRook, wQueen, 
+		bKnight, bBishop, bRook, bQueen };
+
+	// Check for promotion
+	if (m.isPromotion()) {
+		// Remove pawn
+		pieces[fromPiece] ^= toBB;
+
+		// Get the promotion piece
+		int promoFlag = flag & 0b0011; 
+		Piece toPiece = promoPiece[promoFlag + colorOf(fromPiece) * 4];
+
+		// Place promotion piece where pawn was
+		pieces[toPiece] ^= toBB;
+	}
 
 	// Update allPieces bitboard
 	pieces[allPieces] = pieces[allWhite] | pieces[allBlack];
 
 	// Set or reset en passant
 	if (flag == DOUBLE_PAWN_PUSH) {
-		enPassant = (colorOf(fromPiece) == BLACK) ? sN(toBB) : sS(toBB);
+		enPassant = (colorOf(fromPiece) == WHITE) ? sS(toBB) : sN(toBB);
 	}
 	else enPassant = 0;
 	
