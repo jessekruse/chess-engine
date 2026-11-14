@@ -12,6 +12,14 @@ void makeMoveTest(FEN fStart, std::string from, std::string to, move_t flag, FEN
 	assert(p.pieces[allPieces] == (p.pieces[allWhite] | p.pieces[allBlack]));
 }
 
+void genMovesTest(FEN f, int num) {
+	Position p;
+	p.loadFEN(f);
+	MoveList ml;
+	generateMoves(p, ml);
+	assert(ml.count == num);
+}
+
 void run_tests() {
 
 	//////////////////////////
@@ -189,121 +197,28 @@ void run_tests() {
 	/////////////////////////
 	// Movegen.cpp Tests
 	/////////////////////////
-	MoveList ml;
 
-	// Start position checks
-	p.loadFEN(fStart);
-	generateMoves(p, ml);
-	assert(ml.count == 20);
+	genMovesTest(fStart, 20);
+	genMovesTest("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1", 26);
+	genMovesTest("1n5k/P7/8/8/8/8/6K1/8 w - - 0 1", 16);
+	genMovesTest("8/6k1/8/8/8/8/p7/1N5K b - - 0 1", 16);
+	genMovesTest("8/PPPPPPPP/8/k7/8/8/8/K7 w - - 0 1", 35);
+	genMovesTest("8/8/8/K7/8/k7/pppppppp/8 b - - 0 1", 35);
+	genMovesTest("4k3/8/8/3pP3/8/8/8/4K3 w - d6 0 1", 7);
+	genMovesTest("4k3/8/8/8/3Pp3/8/8/4K3 b - d3 0 1", 7);
+	genMovesTest("4k3/8/8/8/8/4n3/4P3/4K3 w - - 0 1", 4);
+	genMovesTest("4k3/8/8/8/4n3/8/4P3/4K3 w - - 0 1", 5);
+	genMovesTest("4k3/4p3/4N3/8/8/8/8/4K3 b - - 0 1", 4);
+	genMovesTest("4k3/4p3/8/4N3/8/8/8/4K3 b - - 0 1", 5);
+	genMovesTest("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1", 26);
+	genMovesTest("r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 1", 26);
+	genMovesTest("r3k2r/8/8/8/8/8/8/R3K2R w - - 0 1", 24);
+	genMovesTest("r3k2r/8/8/8/8/8/8/R3K2R w Kq - 0 1", 25);
+	genMovesTest("r3k2r/8/8/8/8/8/8/R3K2R b Kq - 0 1", 25);
+	genMovesTest("r3k2r/8/8/8/8/8/8/RN2K2R w KQkq - 0 1", 25);
+	genMovesTest("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1", 48);
+	genMovesTest("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R b KQkq - 0 1", 43);
 
-	p.sideToMove = BLACK;
-	ml.clear();
-	generateMoves(p, ml);
-	assert(ml.count == 20);
-
-	FEN fRookKingTest = "r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1";
-	
-	p.loadFEN(fRookKingTest);
-	ml.clear();
-	generateMoves(p, ml);
-	assert(ml.count == 26);
-
-	// Promotion checks
-	p.loadFEN("1n5k/P7/8/8/8/8/6K1/8 w - - 0 1");
-	ml.clear();
-	generateMoves(p, ml);
-	assert(ml.count == 16);
-
-	p.loadFEN("8/6k1/8/8/8/8/p7/1N5K b - - 0 1");
-	ml.clear();
-	generateMoves(p, ml);
-	assert(ml.count == 16);
-
-	p.loadFEN("8/PPPPPPPP/8/k7/8/8/8/K7 w - - 0 1");
-	ml.clear();
-	generateMoves(p, ml);
-	assert(ml.count == 35);
-
-	p.loadFEN("8/8/8/K7/8/k7/pppppppp/8 b - - 0 1");
-	ml.clear();
-	generateMoves(p, ml);
-	assert(ml.count == 35);
-
-	// En passant checks
-
-	p.loadFEN("4k3/8/8/3pP3/8/8/8/4K3 w - d6 0 1");
-	ml.clear();
-	generateMoves(p, ml);
-	assert(ml.count == 7);
-
-	p.loadFEN("4k3/8/8/8/3Pp3/8/8/4K3 b - d3 0 1");
-	ml.clear();
-	generateMoves(p, ml);
-	assert(ml.count == 7);
-
-	// Blocked push checks
-
-	p.loadFEN("4k3/8/8/8/8/4n3/4P3/4K3 w - - 0 1");
-	ml.clear();
-	generateMoves(p, ml);
-	assert(ml.count == 4);
-
-	p.loadFEN("4k3/8/8/8/4n3/8/4P3/4K3 w - - 0 1");
-	ml.clear();
-	generateMoves(p, ml);
-	assert(ml.count == 5);
-
-	p.loadFEN("4k3/4p3/4N3/8/8/8/8/4K3 b - - 0 1");
-	ml.clear();
-	generateMoves(p, ml);
-	assert(ml.count == 4);
-
-	p.loadFEN("4k3/4p3/8/4N3/8/8/8/4K3 b - - 0 1");
-	ml.clear();
-	generateMoves(p, ml);
-	assert(ml.count == 5);
-
-	// Castling checks
-
-	p.loadFEN("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1");
-	ml.clear();
-	generateMoves(p, ml);
-	assert(ml.count == 26);
-
-	p.loadFEN("r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 1");
-	ml.clear();
-	generateMoves(p, ml);
-	assert(ml.count == 26);
-
-	p.loadFEN("r3k2r/8/8/8/8/8/8/R3K2R w - - 0 1");
-	ml.clear();
-	generateMoves(p, ml);
-	assert(ml.count == 24);
-
-	p.loadFEN("r3k2r/8/8/8/8/8/8/R3K2R w Kq - 0 1");
-	ml.clear();
-	generateMoves(p, ml);
-	assert(ml.count == 25);
-
-	p.loadFEN("r3k2r/8/8/8/8/8/8/R3K2R b Kq - 0 1");
-	ml.clear();
-	generateMoves(p, ml);
-	assert(ml.count == 25);
-
-	p.loadFEN("r3k2r/8/8/8/8/8/8/RN2K2R w KQkq - 0 1");
-	ml.clear();
-	generateMoves(p, ml);
-	assert(ml.count == 25);
-
-	p.loadFEN("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1");
-	ml.clear();
-	generateMoves(p, ml);
-	assert(ml.count == 48);
-
-	p.loadFEN("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R b KQkq - 0 1");
-	ml.clear();
-	generateMoves(p, ml);
-	assert(ml.count == 43);
 
 	////////////////////////////////
 	// makeMove tests
