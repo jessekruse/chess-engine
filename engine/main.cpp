@@ -20,9 +20,23 @@ int main() {
 	FEN fCastle = "r3k2r/8/8/8/8/8/8/R3K2R b KQ - 0 1";
 	FEN fStart = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
+	Move m;
+	m.update("e4", "d5", CAPTURE);
 
 	Position p;
-	p.loadFEN(fStart);
+	p.loadFEN("rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 2");
+
+	p.loadFEN("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 5 1");
+
+	m.update("e5", "f7", CAPTURE);
+
+	p.print();
+	cout << p.getFEN() << endl;
+
+	p.makeMove(m);
+
+	p.print();
+	cout << p.getFEN() << endl;
 
 	run_tests();
 }

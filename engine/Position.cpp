@@ -266,15 +266,31 @@ bool Position::makeMove(Move m) {
 	int to = m.get_to();
 	int flag = m.get_flag();
 
-	Bitboard fromToBB = sqIndextoBB(from) | sqIndextoBB(to);
+	Bitboard fromBB = sqIndextoBB(from);
+	Bitboard toBB = sqIndextoBB(to);
+	Bitboard fromToBB = fromBB | toBB;
 
-	Piece fromPiece = pieceOn(m.get_from());
+	Piece fromPiece = pieceOn(from);
 	assert(fromPiece != PieceCount);
 
 	// Do quiet moves
 	if (flag == QUIET_MOVE) {
 		pieces[fromPiece] ^= fromToBB;
 		pieces[allWhite + sideToMove] ^= fromToBB;
+	}
+
+	// Do capture moves
+	if (flag == CAPTURE) {
+		Piece toPiece = pieceOn(to);
+
+		// Update from piece
+		pieces[fromPiece] ^= fromToBB;			
+		pieces[allWhite + sideToMove] ^= fromToBB;
+
+		// Remove to piece
+		pieces[toPiece] ^= toBB;
+		pieces[allWhite + opposite(sideToMove)] ^= toBB;
+
 	}
 
 	// Update allPieces bitboard

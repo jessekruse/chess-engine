@@ -318,6 +318,19 @@ void run_tests() {
 	assert((p.pieces[allWhite] & p.pieces[allBlack]) == 0);
 	assert(p.pieces[allPieces] == (p.pieces[allWhite] | p.pieces[allBlack]));
 
+	p.loadFEN("rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 2");
+	m.update("e4", "d5", CAPTURE);
+	p.makeMove(m);
+	assert((p.pieces[allWhite] & p.pieces[allBlack]) == 0);
+	assert(p.pieces[allPieces] == (p.pieces[allWhite] | p.pieces[allBlack]));
+
+	p.loadFEN("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 5 1");
+	m.update("e5", "f7", CAPTURE);
+	p.makeMove(m);
+	assert((p.pieces[allWhite] & p.pieces[allBlack]) == 0);
+	assert(p.pieces[allPieces] == (p.pieces[allWhite] | p.pieces[allBlack]));
+
+
 	std::cout << "All tests cleared" << std::endl;
 }
 

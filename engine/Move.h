@@ -50,7 +50,7 @@ struct Move {
 	// Parameterized constructor
 	Move(move_t from, move_t to, move_t flag) : m(from | (to << 6) | (flag << 12)) {}
 
-	void update(std::string from, std::string to, move_t flag);
+	void update(const std::string& from, const std::string& to, move_t flag);
 
 	move_t get_from() const { return (m & 0x3f); }
 	move_t get_to() const { return (m >> 6) & 0x3f; }

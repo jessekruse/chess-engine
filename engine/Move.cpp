@@ -30,7 +30,7 @@ void Move::print_move() const {
 	}
 }
 
-void Move::update(std::string from, std::string to, move_t flag) {
+void Move::update(const std::string& from, const std::string& to, move_t flag) {
 	move_t f = squareIndex(from[0], from[1]);
 	move_t t = squareIndex(to[0], to[1]);
 
