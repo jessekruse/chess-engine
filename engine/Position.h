@@ -50,6 +50,8 @@ static_assert(bQueen == wQueen + 6);
 static_assert(bKing == wKing + 6);
 static_assert(allBlack == allWhite + 1);
 
+Color colorOf(Piece p);
+
 struct Position {
 	std::array<Bitboard, PieceCount> pieces{};
 	Color sideToMove = WHITE;

@@ -260,6 +260,18 @@ Piece Position::pieceOn(int sq) const {
 	return PieceCount;
 }
 
+Color colorOf(Piece p) {
+	assert(p >= 0 && p < 12);
+	for (int i = 0;i < 6;++i) {
+		if (p == i) {
+			return WHITE;
+		}
+		if (p == i + 6) {
+			return BLACK;
+		}
+	}
+}
+
 bool Position::makeMove(Move m) {
 
 	int from = m.get_from();
@@ -277,13 +289,14 @@ bool Position::makeMove(Move m) {
 	if (flag == CAPTURE) {
 		Piece toPiece = pieceOn(to);
 		assert(toPiece != PieceCount);
-		assert(toPiece != fromPiece);
+		assert(colorOf(toPiece) != colorOf(fromPiece));
 
 		// Remove to piece
 		pieces[toPiece] ^= toBB;
 		pieces[allWhite + opposite(sideToMove)] ^= toBB;
 
 	}
+
 
 	// Update from piece
 	pieces[fromPiece] ^= fromToBB;
@@ -292,8 +305,12 @@ bool Position::makeMove(Move m) {
 	// Update allPieces bitboard
 	pieces[allPieces] = pieces[allWhite] | pieces[allBlack];
 
-	// Reset en passant
-	if (flag != DOUBLE_PAWN_PUSH) enPassant = 0;
+	// Set or reset en passant
+	if (flag == DOUBLE_PAWN_PUSH) {
+		enPassant = colorOf(fromPiece) ? sN(toBB) : sS(toBB);
+	}
+	else enPassant = 0;
+	
 
 	// Check if half move count resets
 	if (fromPiece == wPawn || fromPiece == bPawn || m.isCapture()) {
