@@ -350,7 +350,7 @@ bool Position::makeMove(Move m) {
 
 	// Move rooks for castling
 	if (flag == KING_CASTLE || flag == QUEEN_CASTLE) {
-		int index = flag & 0b0001 + sideToMove*2;
+		int index = (flag & 0b0001) + sideToMove*2;
 		
 		Bitboard rookFromTo = sqIndextoBB(castleRook.from[index]) | sqIndextoBB(castleRook.to[index]);
 

@@ -8,6 +8,14 @@ void makeMoveTest(FEN fStart, std::string from, std::string to, move_t flag, FEN
 	m.update(from, to, flag);
 	p.makeMove(m);
 	assert(p.getFEN() == fEnd);
+	Bitboard wPieces = 0;
+	Bitboard bPieces = 0;
+	for (int i = 0;i < 6;++i) {
+		wPieces |= p.pieces[i];
+		bPieces |= p.pieces[i + 6];
+	}
+	assert(p.pieces[allWhite] == wPieces);
+	assert(p.pieces[allBlack] == bPieces);
 	assert((p.pieces[allWhite] & p.pieces[allBlack]) == 0);
 	assert(p.pieces[allPieces] == (p.pieces[allWhite] | p.pieces[allBlack]));
 }
@@ -269,7 +277,33 @@ void run_tests() {
 		"R3k3/8/8/8/8/8/8/4K3 b - - 0 1");
 
 	// Castling Moves tests
-
+	makeMoveTest("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1",
+		"e1", "g1", KING_CASTLE,
+		"r3k2r/8/8/8/8/8/8/R4RK1 b kq - 1 1");
+	makeMoveTest("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1",
+		"e1", "c1", QUEEN_CASTLE,
+		"r3k2r/8/8/8/8/8/8/2KR3R b kq - 1 1");
+	makeMoveTest("r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 1",
+		"e8", "g8", KING_CASTLE,
+		"r4rk1/8/8/8/8/8/8/R3K2R w KQ - 1 2");
+	makeMoveTest("r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 1",
+		"e8", "c8", QUEEN_CASTLE,
+		"2kr3r/8/8/8/8/8/8/R3K2R w KQ - 1 2");
+	makeMoveTest("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1",
+		"h1", "h4", QUIET_MOVE,
+		"r3k2r/8/8/8/7R/8/8/R3K3 b Qkq - 1 1");
+	makeMoveTest("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1",
+		"e1", "e2", QUIET_MOVE,
+		"r3k2r/8/8/8/8/8/4K3/R6R b kq - 1 1");
+	makeMoveTest("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1",
+		"a1", "a8", CAPTURE,
+		"R3k2r/8/8/8/8/8/8/4K2R b Kk - 0 1");
+	makeMoveTest("r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 1",
+		"h8", "h1", CAPTURE,
+		"r3k3/8/8/8/8/8/8/R3K2r w Qq - 0 2");
+	makeMoveTest("r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 1",
+		"e8", "d8", QUIET_MOVE,
+		"r2k3r/8/8/8/8/8/8/R3K2R w KQ - 1 2");
 
 	std::cout << "All tests cleared" << std::endl;
 }

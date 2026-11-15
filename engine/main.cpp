@@ -26,7 +26,7 @@ int main() {
 	Position p;
 	p.loadFEN("rnbqkbnr/ppp1p1pp/8/3pPp2/8/8/PPPP1PPP/RNBQKBNR w KQkq f6 0 3");
 
-	p.loadFEN("r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 1");
+	p.loadFEN("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1");
 	p.print();
 	cout << p.getFEN() << endl;
 	m.update("e8", "c8", QUEEN_CASTLE);
