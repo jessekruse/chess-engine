@@ -270,6 +270,30 @@ static constexpr std::array<Piece, 8> promoPiece = {
 	wKnight, wBishop, wRook, wQueen,
 	bKnight, bBishop, bRook, bQueen };
 
+// Castling masks
+static constexpr std::array<uint8_t, 64> buildCastleMasks() {
+	std::array<uint8_t, 64> castleMask{};
+	castleMask.fill(0b1111);
+
+	int a1 = squareIndex('a', '1');
+	int e1 = squareIndex('e', '1');
+	int h1 = squareIndex('h', '1');
+	int a8 = squareIndex('a', '8');
+	int e8 = squareIndex('e', '8');
+	int h8 = squareIndex('h', '8');
+
+	castleMask[a1] = ~Q;
+	castleMask[e1] = (~Q | ~K);
+	castleMask[h1] = ~K;
+	castleMask[a8] = ~q;
+	castleMask[e8] = (~q | ~k);
+	castleMask[h8] = ~k;
+
+	return castleMask;
+}
+
+static constexpr std::array<uint8_t, 64> castleMask = buildCastleMasks();
+
 bool Position::makeMove(Move m) {
 
 	int from = m.get_from();	// Get from square
@@ -304,10 +328,13 @@ bool Position::makeMove(Move m) {
 		pieces[allWhite + opposite(sideToMove)] ^= captureBB;
 	}
 
+	// Remove castling rights
+	canCastle &= (castleMask[from] & castleMask[to]);
 
-	// Move the piece
+	// Move the from piece
 	pieces[fromPiece] ^= fromToBB;
 	pieces[allWhite + sideToMove] ^= fromToBB;
+
 	
 	// Check for promotion
 	if (m.isPromotion()) {
