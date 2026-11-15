@@ -283,16 +283,33 @@ static constexpr std::array<uint8_t, 64> buildCastleMasks() {
 	int h8 = squareIndex('h', '8');
 
 	castleMask[a1] = ~Q;
-	castleMask[e1] = (~Q | ~K);
+	castleMask[e1] = (~Q & ~K);
 	castleMask[h1] = ~K;
 	castleMask[a8] = ~q;
-	castleMask[e8] = (~q | ~k);
+	castleMask[e8] = (~q & ~k);
 	castleMask[h8] = ~k;
 
 	return castleMask;
 }
 
 static constexpr std::array<uint8_t, 64> castleMask = buildCastleMasks();
+
+// Build table for rook moves for castling
+struct CR {
+	int h1 = squareIndex('h', '1');
+	int f1 = squareIndex('f', '1');
+	int a1 = squareIndex('a', '1');
+	int d1 = squareIndex('d', '1');
+	int h8 = squareIndex('h', '8');
+	int f8 = squareIndex('f', '8');
+	int a8 = squareIndex('a', '8');
+	int d8 = squareIndex('d', '8');
+
+	std::array<int, 4> from = { h1, a1, h8, d8 };
+	std::array<int, 4> to = { f1, d1, f8, d8 };
+};
+
+static constexpr CR castleRook;
 
 bool Position::makeMove(Move m) {
 
@@ -328,8 +345,17 @@ bool Position::makeMove(Move m) {
 		pieces[allWhite + opposite(sideToMove)] ^= captureBB;
 	}
 
-	// Remove castling rights
+	// Remove castling rights if necessary
 	canCastle &= (castleMask[from] & castleMask[to]);
+
+	// Move rooks for castling
+	if (flag == KING_CASTLE || flag == QUEEN_CASTLE) {
+		int index = flag & 0b0001 + sideToMove*2;
+		
+		Bitboard rookFromTo = sqIndextoBB(castleRook.from[index]) | sqIndextoBB(castleRook.to[index]);
+
+		pieces[wRook + 6 * sideToMove] ^= rookFromTo;
+	}
 
 	// Move the from piece
 	pieces[fromPiece] ^= fromToBB;
