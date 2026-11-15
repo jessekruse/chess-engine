@@ -305,7 +305,7 @@ struct CR {
 	int a8 = squareIndex('a', '8');
 	int d8 = squareIndex('d', '8');
 
-	std::array<int, 4> from = { h1, a1, h8, d8 };
+	std::array<int, 4> from = { h1, a1, h8, a8 };
 	std::array<int, 4> to = { f1, d1, f8, d8 };
 };
 
@@ -355,6 +355,7 @@ bool Position::makeMove(Move m) {
 		Bitboard rookFromTo = sqIndextoBB(castleRook.from[index]) | sqIndextoBB(castleRook.to[index]);
 
 		pieces[wRook + 6 * sideToMove] ^= rookFromTo;
+		pieces[allWhite + sideToMove] ^= rookFromTo;
 	}
 
 	// Move the from piece

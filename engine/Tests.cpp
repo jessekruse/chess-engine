@@ -268,6 +268,9 @@ void run_tests() {
 		"b7", "a8", ROOK_PROMO_CAP,
 		"R3k3/8/8/8/8/8/8/4K3 b - - 0 1");
 
+	// Castling Moves tests
+
+
 	std::cout << "All tests cleared" << std::endl;
 }
 
