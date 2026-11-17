@@ -163,7 +163,6 @@ struct cInfo {
 	std::array<std::array<std::uint8_t, 2>, 2> rights = { {{K, Q}, {k, q}} };
 	std::array<std::array<Bitboard, 2>, 2> empties = { {{KEmpty, QEmpty}, {kEmpty, qEmpty}} };
 	std::array<std::array<int, 2>, 2> attackSqs = { {{f1, d1}, {f8,d8}} };
-	std::array<int, 2> kingSq = { e1, e8 };
 	std::array<move_t, 2> flags = { KING_CASTLE, QUEEN_CASTLE };
 };
 
@@ -193,7 +192,7 @@ static void genCastlingMoves(const Position& p, MoveList& move_list) {
 				if ((occupied & CI.empties[c][i]) == 0) {
 
 					// Check if king is in check or would move through check
-					if (!p.isSquareAttacked(CI.attackSqs[c][i], opposite(c)) && !p.isSquareAttacked(CI.kingSq[c], opposite(c))) {
+					if (!p.isSquareAttacked(CI.attackSqs[c][i], opposite(c)) && !p.isSquareAttacked(from, opposite(c))) {
 						int to = CI.to[c][i];
 						int flag = CI.flags[i];
 						move_list.add(Move(from, to, flag));
@@ -204,8 +203,9 @@ static void genCastlingMoves(const Position& p, MoveList& move_list) {
 	}
 }
 
-void generateMoves(const Position& p, MoveList& move_list) {
-
+MoveList generateMoves(const Position& p) {
+	
+	MoveList move_list;
 	// Determine side to move
 	Color c = p.sideToMove;
 	
@@ -216,5 +216,19 @@ void generateMoves(const Position& p, MoveList& move_list) {
 	genPieceMoves(pieceType(wQueen, c), p, move_list);
 	genPawnMoves(p, move_list);
 	genCastlingMoves(p, move_list);
+
+	// Have a full list of moves for a given position
+	// Look through each, see if legal, then add to a new list to return
+	MoveList legal_moves;
+
+	for (int i = 0; i < move_list.count; ++i) {
+		Position child = p;
+		Move m = move_list.list[i];
+		if (child.makeMove(m)) {
+			legal_moves.add(m);
+		}
+	}
+
+	return legal_moves;
 
 }

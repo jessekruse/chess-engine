@@ -5,4 +5,4 @@
 #include "Bitboard.h"
 #include "Attacks.h"
 
-void generateMoves(const Position& p, MoveList& move_list);
+MoveList generateMoves(const Position& p);

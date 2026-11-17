@@ -23,8 +23,7 @@ void makeMoveTest(FEN fStart, std::string from, std::string to, move_t flag, FEN
 void genMovesTest(FEN f, int num) {
 	Position p;
 	p.loadFEN(f);
-	MoveList ml;
-	generateMoves(p, ml);
+	MoveList ml = generateMoves(p);
 	assert(ml.count == num);
 }
 
@@ -211,13 +210,13 @@ void run_tests() {
 	genMovesTest("1n5k/P7/8/8/8/8/6K1/8 w - - 0 1", 16);
 	genMovesTest("8/6k1/8/8/8/8/p7/1N5K b - - 0 1", 16);
 	genMovesTest("8/PPPPPPPP/8/k7/8/8/8/K7 w - - 0 1", 35);
-	genMovesTest("8/8/8/K7/8/k7/pppppppp/8 b - - 0 1", 35);
+	genMovesTest("8/8/8/K7/8/k7/pppppppp/8 b - - 0 1", 33);
 	genMovesTest("4k3/8/8/3pP3/8/8/8/4K3 w - d6 0 1", 7);
 	genMovesTest("4k3/8/8/8/3Pp3/8/8/4K3 b - d3 0 1", 7);
-	genMovesTest("4k3/8/8/8/8/4n3/4P3/4K3 w - - 0 1", 4);
-	genMovesTest("4k3/8/8/8/4n3/8/4P3/4K3 w - - 0 1", 5);
-	genMovesTest("4k3/4p3/4N3/8/8/8/8/4K3 b - - 0 1", 4);
-	genMovesTest("4k3/4p3/8/4N3/8/8/8/4K3 b - - 0 1", 5);
+	genMovesTest("4k3/8/8/8/8/4n3/4P3/4K3 w - - 0 1", 2);
+	genMovesTest("4k3/8/8/8/4n3/8/4P3/4K3 w - - 0 1", 3);
+	genMovesTest("4k3/4p3/4N3/8/8/8/8/4K3 b - - 0 1", 2);
+	genMovesTest("4k3/4p3/8/4N3/8/8/8/4K3 b - - 0 1", 3);
 	genMovesTest("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1", 26);
 	genMovesTest("r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 1", 26);
 	genMovesTest("r3k2r/8/8/8/8/8/8/R3K2R w - - 0 1", 24);
