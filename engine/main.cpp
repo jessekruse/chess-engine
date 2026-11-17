@@ -21,6 +21,9 @@ int main() {
 	FEN fStart = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
 	Position p;
+	p.loadFEN("r3kr2/8/8/8/8/8/8/R3K2R w KQkq - 0 1");
+	p.print();
+
 
 
 	run_tests();

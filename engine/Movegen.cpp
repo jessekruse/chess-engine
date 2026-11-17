@@ -147,6 +147,13 @@ struct cInfo {
 	int g8 = squareIndex('g', '8');
 	int c8 = squareIndex('c', '8');
 
+	int d1 = squareIndex('d', '1');
+	int e1 = squareIndex('e', '1');
+	int f1 = squareIndex('f', '1');
+	int d8 = squareIndex('d', '8');
+	int e8 = squareIndex('e', '8');
+	int f8 = squareIndex('f', '8');
+
 	Bitboard KEmpty = 0x60;
 	Bitboard QEmpty = 0xE;
 	Bitboard kEmpty = 0x6000000000000000;
@@ -155,6 +162,8 @@ struct cInfo {
 	std::array<std::array<int, 2>, 2> to = { {{g1,c1},{g8,c8}} };
 	std::array<std::array<std::uint8_t, 2>, 2> rights = { {{K, Q}, {k, q}} };
 	std::array<std::array<Bitboard, 2>, 2> empties = { {{KEmpty, QEmpty}, {kEmpty, qEmpty}} };
+	std::array<std::array<int, 2>, 2> attackSqs = { {{f1, d1}, {f8,d8}} };
+	std::array<int, 2> kingSq = { e1, e8 };
 	std::array<move_t, 2> flags = { KING_CASTLE, QUEEN_CASTLE };
 };
 
@@ -182,9 +191,13 @@ static void genCastlingMoves(const Position& p, MoveList& move_list) {
 				
 				// Check if squares in between king and rook are empty
 				if ((occupied & CI.empties[c][i]) == 0) {
-					int to = CI.to[c][i];
-					int flag = CI.flags[i];
-					move_list.add(Move(from, to, flag));
+
+					// Check if king is in check or would move through check
+					if (!p.isSquareAttacked(CI.attackSqs[c][i], opposite(c)) && !p.isSquareAttacked(CI.kingSq[c], opposite(c))) {
+						int to = CI.to[c][i];
+						int flag = CI.flags[i];
+						move_list.add(Move(from, to, flag));
+					}
 				}
 			}
 		}
