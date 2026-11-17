@@ -407,11 +407,6 @@ bool Position::makeMove(Move m) {
 }
 
 bool Position::isSquareAttacked(int sq, Color enemyC) const {
-	/*
-		We have the king square and the color of the king from sideToMove
-		I need to generate attacks for each of the pieces from that square and 
-		see if they intersect with the same enemy piece types.
-	*/
 
 	Bitboard occupied = pieces[allPieces];
 
@@ -429,4 +424,6 @@ bool Position::isSquareAttacked(int sq, Color enemyC) const {
 	if ((knightAttacks[sq] & knights) != 0) return true;
 	if ((bishopAttacks(sq, occupied) & (queens | bishops)) != 0) return true;
 	if ((kingAttacks[sq] & king) != 0) return true;
+
+	return false;
 }
