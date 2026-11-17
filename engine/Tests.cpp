@@ -305,6 +305,46 @@ void run_tests() {
 		"e8", "d8", QUIET_MOVE,
 		"r2k3r/8/8/8/8/8/8/R3K2R w KQ - 1 2");
 
+	// isSquareAttacked tests
+	p.loadFEN("8/8/8/8/4N3/8/8/8 w - - 0 1");
+	assert(p.isSquareAttacked(squareIndex('f', '2'), WHITE));
+
+	p.loadFEN("8/8/8/8/8/8/8/K7 w - - 0 1");
+	assert(p.isSquareAttacked(squareIndex('a', '2'), WHITE));
+
+	p.loadFEN("b7/8/8/8/8/8/8/8 w - - 0 1");
+	assert(p.isSquareAttacked(squareIndex('h', '1'), BLACK));
+
+	p.loadFEN("b7/8/8/8/4p3/8/8/8 w - - 0 1");
+	assert(p.isSquareAttacked(squareIndex('h', '1'), BLACK) == false);
+
+	p.loadFEN("8/8/8/8/4R3/8/8/8 w - - 0 1");
+	assert(p.isSquareAttacked(squareIndex('a', '4'), WHITE));
+
+	p.loadFEN("7q/8/8/8/8/8/8/8 w - - 0 1");
+	assert(p.isSquareAttacked(squareIndex('h', '1'), BLACK));
+	assert(p.isSquareAttacked(squareIndex('b', '2'), BLACK));
+
+	p.loadFEN("8/8/8/8/8/8/2P5/8 w - - 0 1");
+	assert(p.isSquareAttacked(squareIndex('d', '3'), WHITE));
+	assert(p.isSquareAttacked(squareIndex('b', '3'), WHITE));
+
+	p.loadFEN("8/8/3p4/8/8/8/8/8 w - - 0 1");
+	assert(p.isSquareAttacked(squareIndex('e', '5'), BLACK));
+	assert(p.isSquareAttacked(squareIndex('c', '5'), BLACK));
+
+	p.loadFEN("8/8/8/8/8/8/P7/8 w - - 0 1");
+	assert(p.isSquareAttacked(squareIndex('h', '2'), WHITE) == false);
+
+	p.loadFEN("4rk2/8/8/8/4N3/8/8/4K3 w - - 0 1");
+	assert(p.isSquareAttacked(squareIndex('e', '1'), BLACK) == false);
+
+	p.loadFEN("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1");
+	assert(p.isSquareAttacked(squareIndex('a', '5'), WHITE) == false);
+	assert(p.isSquareAttacked(squareIndex('a', '5'), WHITE) == false);
+
+
+
 	std::cout << "All tests cleared" << std::endl;
 }
 

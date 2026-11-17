@@ -1,6 +1,7 @@
 #include "Position.h"
 #include <iostream>
 #include <cassert>
+#include "Attacks.h"
 
 // Loads a FEN string into the pieces Bitboards
 void Position::loadFEN(const FEN& f) {
@@ -379,6 +380,10 @@ bool Position::makeMove(Move m) {
 	// Update allPieces bitboard
 	pieces[allPieces] = pieces[allWhite] | pieces[allBlack];
 
+	// Check if king is under attack after move
+	int kingSq = lsb(pieces[wKing + 6 * sideToMove]);
+	if (isSquareAttacked(kingSq, opposite(sideToMove))) return false;
+
 	// Set or reset en passant
 	if (flag == DOUBLE_PAWN_PUSH) {
 		enPassant = (colorOf(fromPiece) == WHITE) ? sS(toBB) : sN(toBB);
@@ -399,4 +404,29 @@ bool Position::makeMove(Move m) {
 	sideToMove = (sideToMove == WHITE) ? BLACK : WHITE;
 
 	return true;
+}
+
+bool Position::isSquareAttacked(int sq, Color enemyC) const {
+	/*
+		We have the king square and the color of the king from sideToMove
+		I need to generate attacks for each of the pieces from that square and 
+		see if they intersect with the same enemy piece types.
+	*/
+
+	Bitboard occupied = pieces[allPieces];
+
+	// Get enemy piece bitboards
+	Bitboard pawns = pieces[wPawn + 6 * enemyC];
+	Bitboard rooks = pieces[wRook + 6 * enemyC];
+	Bitboard knights = pieces[wKnight + 6 * enemyC];
+	Bitboard bishops = pieces[wBishop + 6 * enemyC];
+	Bitboard queens = pieces[wQueen + 6 * enemyC];
+	Bitboard king = pieces[wKing + 6 * enemyC];
+
+	// Check if there are enemy pieces attacking that square
+	if ((pawnAttacks[opposite(enemyC)][sq] & pawns) != 0) return true;
+	if ((rookAttacks(sq, occupied) & (queens | rooks)) != 0) return true;
+	if ((knightAttacks[sq] & knights) != 0) return true;
+	if ((bishopAttacks(sq, occupied) & (queens | bishops)) != 0) return true;
+	if ((kingAttacks[sq] & king) != 0) return true;
 }

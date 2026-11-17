@@ -64,6 +64,7 @@ struct Position {
 	FEN getFEN() const;
 	bool makeMove(Move m);
 	Piece pieceOn(int sq) const;
+	bool isSquareAttacked(int sq, Color enemyC) const;
 };
 
 static_assert(sizeof(Position) <= 160);
