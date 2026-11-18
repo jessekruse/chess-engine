@@ -182,20 +182,24 @@ static void genCastlingMoves(const Position& p, MoveList& move_list) {
 	if (king) {
 		int from = pop_lsb(king);
 
-		// Go through castling checks
-		for (int i = 0;i < 2; ++i) {
+		// Check if king is currently in check
+		if (!p.isSquareAttacked(from, opposite(c))) {
 
-			// Check if king can castle
-			if ((cRights & CI.rights[c][i]) != 0) {
-				
-				// Check if squares in between king and rook are empty
-				if ((occupied & CI.empties[c][i]) == 0) {
+			// Go through castling checks
+			for (int i = 0;i < 2; ++i) {
 
-					// Check if king is in check or would move through check
-					if (!p.isSquareAttacked(CI.attackSqs[c][i], opposite(c)) && !p.isSquareAttacked(from, opposite(c))) {
-						int to = CI.to[c][i];
-						int flag = CI.flags[i];
-						move_list.add(Move(from, to, flag));
+				// Check if king can castle
+				if ((cRights & CI.rights[c][i]) != 0) {
+
+					// Check if squares in between king and rook are empty
+					if ((occupied & CI.empties[c][i]) == 0) {
+
+						// Check if king would move through check
+						if (!p.isSquareAttacked(CI.attackSqs[c][i], opposite(c))) {
+							int to = CI.to[c][i];
+							int flag = CI.flags[i];
+							move_list.add(Move(from, to, flag));
+						}
 					}
 				}
 			}
@@ -203,12 +207,15 @@ static void genCastlingMoves(const Position& p, MoveList& move_list) {
 	}
 }
 
+// Only generates legal moves for a position
 MoveList generateMoves(const Position& p) {
 	
 	MoveList move_list;
+
 	// Determine side to move
 	Color c = p.sideToMove;
 	
+	// Generate pseudo legal moves
 	genPieceMoves(pieceType(wKnight,c), p, move_list);
 	genPieceMoves(pieceType(wKing, c), p, move_list);
 	genPieceMoves(pieceType(wRook, c), p, move_list);
@@ -217,7 +224,7 @@ MoveList generateMoves(const Position& p) {
 	genPawnMoves(p, move_list);
 	genCastlingMoves(p, move_list);
 
-	// Have a full list of moves for a given position
+	// Have a full list of pseudo legal moves for a given position
 	// Look through each, see if legal, then add to a new list to return
 	MoveList legal_moves;
 

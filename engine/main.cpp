@@ -21,7 +21,7 @@ int main() {
 	FEN fStart = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
 	Position p;
-	p.loadFEN("r3k2r/8/8/8/8/8/8/R3K2R w - - 0 1");
+	p.loadFEN("r3k2r/8/8/8/8/8/8/2R1K3 b kq - 0 1");
 	p.print();
 
 	MoveList ml = generateMoves(p);

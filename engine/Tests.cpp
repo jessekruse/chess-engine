@@ -226,6 +226,19 @@ void run_tests() {
 	genMovesTest("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1", 48);
 	genMovesTest("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R b KQkq - 0 1", 43);
 
+	// Tests A-J
+	genMovesTest("r3kr2/8/8/8/8/8/8/R3K2R w KQq - 0 1", 23);
+	genMovesTest("4r1k1/8/8/8/8/8/8/R3K2R w KQ - 0 1", 4);
+	genMovesTest("4k3/8/8/8/8/n7/8/R3K2R w KQ - 0 1", 21);
+	genMovesTest("3rk3/8/8/8/8/8/8/R3K2R w KQ - 0 1", 23);
+	genMovesTest("4k1r1/8/8/8/8/8/8/R3K2R w KQ - 0 1", 25);
+	genMovesTest("4k3/8/8/8/8/8/6p1/R3K2R w KQ - 0 1", 24);
+	genMovesTest("4kr2/8/8/8/8/8/5P2/R3K2R w KQ - 0 1", 27);
+	genMovesTest("r3k2r/8/8/8/1B6/8/8/4K3 b kq - 0 1", 23);
+	genMovesTest("r3k2r/8/3N4/8/8/8/8/4K3 b kq - 0 1", 4);
+	genMovesTest("r3k2r/8/8/8/8/8/8/2R1K3 b kq - 0 1", 25);
+
+
 
 	////////////////////////////////
 	// makeMove tests
